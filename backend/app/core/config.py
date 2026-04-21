@@ -5,6 +5,7 @@ from pydantic import PostgresDsn
 class Settings(BaseSettings):
     PROJECT_NAME: str
     PROJECT_VERSION: str = "1.0.0"
+    ADMIN_NAME: str
     ADMIN_EMAIL: str
 
     DEBUG: bool = True
