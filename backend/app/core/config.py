@@ -4,7 +4,12 @@ from pydantic import PostgresDsn
 
 class Settings(BaseSettings):
     PROJECT_NAME: str
+    PROJECT_VERSION: str = "1.0.0"
     ADMIN_EMAIL: str
+
+    DEBUG: bool = True
+
+    API_v1_PREFIX: str
 
     POSTGRES_SERVER: str
     POSTGRES_PORT: int = 5432
@@ -24,5 +29,10 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB,
         )
 
-    model_config = SettingsConfigDict(env_file="../../../.env")
+    model_config = SettingsConfigDict(
+        env_file="../../../.env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,       # Чувствительность к регистру
+        extra="ignore"             # Игнорировать лишние переменные
+    )
 
