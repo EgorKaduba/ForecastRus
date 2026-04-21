@@ -1,8 +1,13 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import PostgresDsn
+from pydantic import PostgresDsn, computed_field
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file="../.env",
+        env_file_encoding="utf-8",
+        extra="ignore"             # Игнорировать лишние переменные
+    )
     PROJECT_NAME: str
     PROJECT_VERSION: str = "1.0.0"
     ADMIN_NAME: str
@@ -10,7 +15,7 @@ class Settings(BaseSettings):
 
     DEBUG: bool = True
 
-    API_v1_PREFIX: str
+    API_V1_PREFIX: str
 
     POSTGRES_SERVER: str
     POSTGRES_PORT: int = 5432
@@ -29,11 +34,4 @@ class Settings(BaseSettings):
             port=self.POSTGRES_PORT,
             path=self.POSTGRES_DB,
         )
-
-    model_config = SettingsConfigDict(
-        env_file="../../../.env",
-        env_file_encoding="utf-8",
-        case_sensitive=True,       # Чувствительность к регистру
-        extra="ignore"             # Игнорировать лишние переменные
-    )
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from core import config
+from .core import config
 
 from functools import lru_cache
 
