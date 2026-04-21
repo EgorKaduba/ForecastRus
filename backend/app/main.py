@@ -15,5 +15,6 @@ app = FastAPI(
     contact={
         "name": settings.ADMIN_NAME,
         "email": settings.ADMIN_EMAIL
-    }
+    },
+    debug=settings.DEBUG
 )
