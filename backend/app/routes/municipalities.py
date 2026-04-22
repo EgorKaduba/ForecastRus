@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query, HTTPException
 from sqlmodel import select
 
 from ..deps import SessionDep
-from ..models import Municipality
+from ..models import Municipality, DemographicData, DemographicDataWithName
 
 mun_router = APIRouter(
     prefix="/municipalities",
@@ -47,3 +47,21 @@ def read_municipality(
     if not municipality:
         raise HTTPException(status_code=404, detail=f"Муниципалитет с названием [{municipality_name}] не найден")
     return municipality
+
+
+@mun_router.get("/{municipality_id}/{year}", summary="Получить информацию о муниципалитете за определённый год")
+def get_municipality_data(
+        municipality_id: int,
+        year: int,
+        session: SessionDep
+) -> DemographicDataWithName:
+    statement = select(DemographicData).where(DemographicData.municipality_id == municipality_id,
+                                              DemographicData.year == year)
+    municipality_data = session.exec(statement).first()
+    municipality_name = session.get(Municipality, municipality_id)
+    data_dict = municipality_data.dict()
+    data_dict["municipality_name"] = municipality_name.municipality_name
+    if not municipality_data:
+        raise HTTPException(status_code=404,
+                            detail=f"Информация о муниципалитете с id={municipality_id} за {year} год не найдена")
+    return DemographicDataWithName(**data_dict)
