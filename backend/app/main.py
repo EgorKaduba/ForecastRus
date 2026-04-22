@@ -1,14 +1,6 @@
 from fastapi import FastAPI
-from .core import config
+from .core.config import settings
 
-from functools import lru_cache
-
-
-@lru_cache
-def get_settings():
-    return config.Settings()  # type: ignore
-
-settings = get_settings()
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.PROJECT_VERSION,
