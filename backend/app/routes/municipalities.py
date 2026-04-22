@@ -9,6 +9,7 @@ mun_router = APIRouter(
     tags=["Муниципалитеты"]
 )
 
+
 @mun_router.get("/", summary="Получение всех муниципалитетов РФ")
 def read_municipalities(
         session: SessionDep,
@@ -20,10 +21,27 @@ def read_municipalities(
         raise HTTPException(status_code=404, detail="Муниципалитеты не найдены")
     return municipalities
 
+
+@mun_router.get("/types", summary="Получить все типы муниципалитетов")
+def get_municipalities_types(session: SessionDep) -> list[str]:
+    types = list(session.exec(select(Municipality.mun_type).distinct()).all())
+    if not types:
+        raise HTTPException(status_code=404, detail="Типы муниципалитетов не найдены")
+    return types
+
+
+@mun_router.get("/types/{municipality_type}", summary="Поиск муниципалитетов по типу")
+def get_municipalities_by_type(municipality_type: str, session: SessionDep) -> list[Municipality]:
+    municipalities = list(session.exec(select(Municipality).where(Municipality.mun_type == municipality_type)).all())
+    if not municipalities:
+        raise HTTPException(status_code=404, detail=f"Муниципалитеты с типом [{municipality_type}] не найдены")
+    return municipalities
+
+
 @mun_router.get("/{municipality_name}", summary="Поиск муниципалитета по названию")
 def read_municipality(
-    municipality_name: str,
-    session: SessionDep
+        municipality_name: str,
+        session: SessionDep
 ) -> Municipality:
     municipality = session.exec(select(Municipality).where(Municipality.municipality_name == municipality_name)).first()
     if not municipality:
