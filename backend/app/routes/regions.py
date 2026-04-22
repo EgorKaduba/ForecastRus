@@ -22,7 +22,7 @@ def read_regions(
     raise HTTPException(status_code=404, detail="Субъекты РФ не найдены")
 
 
-@reg_router.get("/{region_name}")
+@reg_router.get("/{region_name}", summary="Получение региона по названию")
 def read_region(
         region_name: str,
         session: SessionDep
@@ -33,7 +33,7 @@ def read_region(
     return region
 
 
-@reg_router.get("/{region_id}/{year}")
+@reg_router.get("/{region_id}/{year}", summary="Получение информации о регионе по id за определенный год")
 def get_region_data(
         region_id: int,
         year: int,
