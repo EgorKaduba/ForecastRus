@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
-from . import regions, municipalities
+from . import regions, municipalities, heatmap
 
 api_router = APIRouter()
 api_router.include_router(regions.reg_router)
 api_router.include_router(municipalities.mun_router)
+api_router.include_router(heatmap.heatmap_router)
