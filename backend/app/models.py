@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from pydantic import BaseModel
 
 
 class Region(SQLModel, table=True):
@@ -61,3 +62,10 @@ class DemographicData(SQLModel, table=True):
 
 class DemographicDataWithName(DemographicData):
     municipality_name: str
+
+
+class RegionColor(BaseModel):
+    code: str
+    name: str
+    population: int
+    color: str
