@@ -18,7 +18,7 @@ def chart_population(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
@@ -43,7 +43,7 @@ def chart_population_percent(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
@@ -68,7 +68,7 @@ def chart_birth_rate(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
@@ -93,7 +93,7 @@ def chart_mortality_rate(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
@@ -118,7 +118,7 @@ def chart_natural_growth(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
@@ -143,7 +143,7 @@ def chart_migration(
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
     year_from: int = Query(..., ge=2010, le=2030),
     year_to: int = Query(..., ge=2010, le=2030)
-):
+) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
     elif type == "municipality":
