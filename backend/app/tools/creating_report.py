@@ -20,8 +20,8 @@ def center_image(pdf: FPDF, image_path: Union[str, BytesIO], width: int) -> None
 
 def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
     pdf = FPDF()
-    pdf.add_font('TimesNewRoman', '', 'Fonts/TimesNewRomanRegular.ttf')
-    pdf.add_font('TimesNewRoman', 'B', 'Fonts/TimesNewRomanBold.ttf')
+    pdf.add_font('TimesNewRoman', '', 'fonts/TimesNewRomanRegular.ttf')
+    pdf.add_font('TimesNewRoman', 'B', 'fonts/TimesNewRomanBold.ttf')
     pdf.add_page()
     pdf.set_font('TimesNewRoman', 'B', 16)
 

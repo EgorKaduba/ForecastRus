@@ -39,7 +39,7 @@ def plot_population(data: list[dict], type: str) -> Union[BytesIO, None]:
     max_pop = max(population)
     ax.set_ylim(min_pop - (max_pop - min_pop) * 0.1, max_pop + (max_pop - min_pop) * 0.1)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
 
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Численность населения (чел.)", fontproperties=custom_font, fontsize=12)
@@ -141,7 +141,7 @@ def plot_population_percent_change(data: list[dict], type: str, for_what: str) -
     margin = (max_percent - min_percent) * 0.15 if max_percent != min_percent else 5
     ax.set_ylim(min_percent - margin, max_percent + margin)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Изменение (%)", fontproperties=custom_font, fontsize=12)
     ax.grid(False)
@@ -239,7 +239,7 @@ def plot_birth_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
     margin = (max_rate - min_rate) * 0.1 if max_rate != min_rate else 1
     ax.set_ylim(min_rate - margin, max_rate + margin)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Коэффициент рождаемости (%)", fontproperties=custom_font, fontsize=12)
     ax.grid(False)
@@ -323,7 +323,7 @@ def plot_mortality_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
     margin = (max_rate - min_rate) * 0.1 if max_rate != min_rate else 1
     ax.set_ylim(min_rate - margin, max_rate + margin)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Коэффициент смертности (%)", fontproperties=custom_font, fontsize=12)
     ax.grid(False)
@@ -423,7 +423,7 @@ def plot_natural_growth(data: list[dict], type: str, for_what: str) -> Union[Byt
     margin = (max_growth - min_growth) * 0.15 if max_growth != min_growth else 1000
     ax.set_ylim(min_growth - margin, max_growth + margin)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Естественный прирост (чел.)", fontproperties=custom_font, fontsize=12)
     ax.grid(False)
@@ -534,7 +534,7 @@ def plot_migration(data: list[dict], type: str, for_what: str) -> Union[BytesIO,
     margin = (max_mig - min_mig) * 0.15 if max_mig != min_mig else 1000
     ax.set_ylim(min_mig - margin, max_mig + margin)
 
-    custom_font = FontProperties(fname="Fonts/Manrope-Bold.ttf", size=14)
+    custom_font = FontProperties(fname="fonts/Manrope-Bold.ttf", size=14)
     ax.set_xlabel("Год", fontproperties=custom_font, fontsize=12)
     ax.set_ylabel("Миграционный прирост (чел.)", fontproperties=custom_font, fontsize=12)
     ax.grid(False)
