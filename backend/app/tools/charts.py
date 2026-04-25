@@ -24,6 +24,9 @@ def plot_population(data: list[dict], type: str) -> Union[BytesIO, None]:
         print("Нет валидных данных для построения графика")
         return None
 
+    if len(valid_data) == 1:
+        return None
+
     years = [item[0] for item in valid_data]
     population = [item[1] for item in valid_data]
 
@@ -89,7 +92,7 @@ def plot_population(data: list[dict], type: str) -> Union[BytesIO, None]:
     return buffer
 
 
-def plot_population_percent_change(data: list[dict], type: str) -> Union[BytesIO, None]:
+def plot_population_percent_change(data: list[dict], type: str, for_what: str) -> Union[BytesIO, None]:
     if not data:
         print("Нет данных для построения графика")
         return None
@@ -108,6 +111,9 @@ def plot_population_percent_change(data: list[dict], type: str) -> Union[BytesIO
         print("Нет валидных данных для построения графика")
         return None
 
+    if len(valid_data) == 1:
+        return None
+
     years = [item[0] for item in valid_data]
     population = [item[1] for item in valid_data]
 
@@ -118,13 +124,16 @@ def plot_population_percent_change(data: list[dict], type: str) -> Union[BytesIO
 
     ax.plot(years, percent_changes, marker='o', linewidth=2, markersize=6, color='#00B0FF')
 
-    ax.fill_between(years, percent_changes, 0,
-                    where=[p >= 0 for p in percent_changes],
-                    alpha=0.3, color='#00C040', interpolate=True)
-    ax.fill_between(years, percent_changes, 0,
-                    where=[p < 0 for p in percent_changes],
-                    alpha=0.3, color='#FF4444', interpolate=True)
-
+    if for_what == "report":
+        ax.fill_between(years, percent_changes, 0,
+                        where=[p >= 0 for p in percent_changes],
+                        alpha=0.3, color='#00C040', interpolate=True)
+        ax.fill_between(years, percent_changes, 0,
+                        where=[p < 0 for p in percent_changes],
+                        alpha=0.3, color='#FF4444', interpolate=True)
+    if for_what == "api":
+        ax.fill_between(years, percent_changes, 0,
+                        alpha=0.3, color='#00C0E8', interpolate=True)
     ax.axhline(y=0, color='gray', linewidth=1, linestyle='--', alpha=0.7)
 
     min_percent = min(percent_changes)
@@ -152,18 +161,33 @@ def plot_population_percent_change(data: list[dict], type: str) -> Union[BytesIO
     ax.set_xticks(years)
     ax.set_xticklabels(years, rotation=45)
 
-    for year, change in zip(years, percent_changes):
-        if year != years[0]:
-            sign = '+' if change >= 0 else ''
-            change_text = f'{sign}{change:.1f}%'
-            text_color = '#00C040' if change >= 0 else '#FF4444'
-            offset = 12 if change >= 0 else -18
+    if for_what == "report":
+        for year, change in zip(years, percent_changes):
+            if year != years[0]:
+                sign = '+' if change >= 0 else ''
+                change_text = f'{sign}{change:.1f}%'
+                text_color = '#00C040' if change >= 0 else '#FF4444'
+                offset = 12 if change >= 0 else -18
 
-            ax.annotate(change_text, (year, change), xytext=(15, offset),
-                        textcoords='offset points', ha='center', fontsize=9,
-                        color=text_color,
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                  edgecolor=text_color, alpha=1))
+                ax.annotate(change_text, (year, change), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
+
+    if for_what == "api":
+        for year, change in zip(years, percent_changes):
+            if year != years[0]:
+                sign = '+' if change >= 0 else ''
+                change_text = f'{sign}{change:.1f}%'
+                text_color = '#00C0E8'
+                offset = 12 if change >= 0 else -18
+
+                ax.annotate(change_text, (year, change), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -197,6 +221,9 @@ def plot_birth_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     if not valid_data:
         print("Нет валидных данных для построения графика")
+        return None
+
+    if len(valid_data) == 1:
         return None
 
     years = [item[0] for item in valid_data]
@@ -280,6 +307,9 @@ def plot_mortality_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
         print("Нет валидных данных для построения графика")
         return None
 
+    if len(valid_data) == 1:
+        return None
+
     years = [item[0] for item in valid_data]
     mortality_rates = [item[1] for item in valid_data]
 
@@ -341,7 +371,7 @@ def plot_mortality_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     return buffer
 
-def plot_natural_growth(data: list[dict], type: str) -> Union[BytesIO, None]:
+def plot_natural_growth(data: list[dict], type: str, for_what: str) -> Union[BytesIO, None]:
     if not data:
         print("Нет данных для построения графика")
         return None
@@ -362,25 +392,29 @@ def plot_natural_growth(data: list[dict], type: str) -> Union[BytesIO, None]:
         print("Нет валидных данных для построения графика")
         return None
 
+    if len(valid_data) == 1:
+        return None
+
     years = [item[0] for item in valid_data]
     natural_growth = [(item[1] - item[2]) for item in valid_data]
 
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    colors = ['#00C040' if g >= 0 else '#FF4444' for g in natural_growth]
-
     for i in range(len(years) - 1):
         ax.plot([years[i], years[i + 1]], [natural_growth[i], natural_growth[i + 1]],
                 linewidth=2, color='#00B0FF')
 
-    ax.scatter(years, natural_growth, marker='o', s=100, c=colors, zorder=5)
-
-    ax.fill_between(years, natural_growth, 0,
-                    where=[g >= 0 for g in natural_growth],
-                    alpha=0.3, color='#00C040', interpolate=True)
-    ax.fill_between(years, natural_growth, 0,
-                    where=[g < 0 for g in natural_growth],
-                    alpha=0.3, color='#FF4444', interpolate=True)
+    ax.plot(years, natural_growth, marker='o', linewidth=2, markersize=6, color='#00B0FF')
+    if for_what == "report":
+        ax.fill_between(years, natural_growth, 0,
+                        where=[p >= 0 for p in natural_growth],
+                        alpha=0.3, color='#00C040', interpolate=True)
+        ax.fill_between(years, natural_growth, 0,
+                        where=[p < 0 for p in natural_growth],
+                        alpha=0.3, color='#FF4444', interpolate=True)
+    if for_what == "api":
+        ax.fill_between(years, natural_growth, 0,
+                        alpha=0.3, color='#00C0E8', interpolate=True)
 
     ax.axhline(y=0, color='gray', linewidth=1, linestyle='--', alpha=0.7)
 
@@ -412,17 +446,31 @@ def plot_natural_growth(data: list[dict], type: str) -> Union[BytesIO, None]:
     ax.set_xticks(years)
     ax.set_xticklabels(years, rotation=45)
 
-    for year, growth in zip(years, natural_growth):
-        sign = '+' if growth >= 0 else ''
-        growth_text = f'{sign}{growth:,.0f}'
-        text_color = '#00C040' if growth >= 0 else '#FF4444'
-        offset = 15 if growth >= 0 else -20
+    if for_what == "report":
+        for year, growth in zip(years, natural_growth):
+            sign = '+' if growth >= 0 else ''
+            growth_text = f'{sign}{growth:,.0f}'
+            text_color = '#00C040' if growth >= 0 else '#FF4444'
+            offset = 15 if growth >= 0 else -20
 
-        ax.annotate(growth_text, (year, growth), xytext=(15, offset),
-                    textcoords='offset points', ha='center', fontsize=9,
-                    color=text_color,
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                              edgecolor=text_color, alpha=1))
+            ax.annotate(growth_text, (year, growth), xytext=(15, offset),
+                        textcoords='offset points', ha='center', fontsize=9,
+                        color=text_color,
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                  edgecolor=text_color, alpha=1))
+
+    if for_what == "api":
+        for year, growth in zip(years, natural_growth):
+            sign = '+' if growth >= 0 else ''
+            growth_text = f'{sign}{growth:,.0f}'
+            text_color = '#00C0E8'
+            offset = 15 if growth >= 0 else -20
+
+            ax.annotate(growth_text, (year, growth), xytext=(15, offset),
+                        textcoords='offset points', ha='center', fontsize=9,
+                        color=text_color,
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                  edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -439,7 +487,7 @@ def plot_natural_growth(data: list[dict], type: str) -> Union[BytesIO, None]:
     return buffer
 
 
-def plot_migration(data: list[dict], type: str) -> Union[BytesIO, None]:
+def plot_migration(data: list[dict], type: str, for_what: str) -> Union[BytesIO, None]:
     if not data:
         print("Нет данных для построения графика")
         return None
@@ -458,6 +506,9 @@ def plot_migration(data: list[dict], type: str) -> Union[BytesIO, None]:
         print("Нет валидных данных для построения графика")
         return None
 
+    if len(valid_data) == 1:
+        return None
+
     years = [item[0] for item in valid_data]
     migration = [item[1] for item in valid_data]
 
@@ -465,12 +516,16 @@ def plot_migration(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     ax.plot(years, migration, marker='o', linewidth=2, markersize=6, color='#00B0FF')
 
-    ax.fill_between(years, migration, 0,
-                    where=[m >= 0 for m in migration],
-                    alpha=0.3, color='#00C040', interpolate=True)
-    ax.fill_between(years, migration, 0,
-                    where=[m < 0 for m in migration],
-                    alpha=0.3, color='#FF4444', interpolate=True)
+    if for_what == "report":
+        ax.fill_between(years, migration, 0,
+                        where=[p >= 0 for p in migration],
+                        alpha=0.3, color='#00C040', interpolate=True)
+        ax.fill_between(years, migration, 0,
+                        where=[p < 0 for p in migration],
+                        alpha=0.3, color='#FF4444', interpolate=True)
+    if for_what == "api":
+        ax.fill_between(years, migration, 0,
+                        alpha=0.3, color='#00C0E8', interpolate=True)
 
     ax.axhline(y=0, color='gray', linewidth=1, linestyle='--', alpha=0.7)
 
@@ -501,18 +556,30 @@ def plot_migration(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     ax.set_xticks(years)
     ax.set_xticklabels(years, rotation=45)
+    if for_what == "report":
+        for year, mig in zip(years, migration):
+            sign = '+' if mig >= 0 else ''
+            mig_text = f'{sign}{mig:.0f}'
+            text_color = '#00C040' if mig >= 0 else '#FF4444'
+            offset = 15 if mig >= 0 else -20
 
-    for year, mig in zip(years, migration):
-        sign = '+' if mig >= 0 else ''
-        mig_text = f'{sign}{mig:.0f}'
-        text_color = '#00C040' if mig >= 0 else '#FF4444'
-        offset = 15 if mig >= 0 else -20
+            ax.annotate(mig_text, (year, mig), xytext=(15, offset),
+                        textcoords='offset points', ha='center', fontsize=9,
+                        color=text_color,
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                  edgecolor=text_color, alpha=1))
+    if for_what == "api":
+        for year, mig in zip(years, migration):
+            sign = '+' if mig >= 0 else ''
+            mig_text = f'{sign}{mig:.0f}'
+            text_color = '#00C0E8'
+            offset = 15 if mig >= 0 else -20
 
-        ax.annotate(mig_text, (year, mig), xytext=(15, offset),
-                    textcoords='offset points', ha='center', fontsize=9,
-                    color=text_color,
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                              edgecolor=text_color, alpha=1))
+            ax.annotate(mig_text, (year, mig), xytext=(15, offset),
+                        textcoords='offset points', ha='center', fontsize=9,
+                        color=text_color,
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                  edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
