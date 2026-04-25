@@ -106,7 +106,7 @@ nav a {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 60%;
+  width: clamp(25vw, 60rem, 75vw);
   height: 121px;
   border-radius: 0 0 50px 0;
 }
@@ -131,26 +131,108 @@ nav a {
   mask-repeat: no-repeat, repeat;
   mask-composite: subtract;
 }
+
 .hero-title {
   position: absolute;
   top: 0px;
-  left: 100px;
   font-family: "Steelfish";
-  font-size: 6vw;
+  font-size: clamp(40px, 6vw, 95px);
+  left: clamp(100px, 5%, 100px);
   color: #00c0e8;
-}
-
-.hero-title span {
-  position: absolute;
-  top: 120px;
-  left: 0px;
-  font-family: "Manrope";
-  font-size: 48px;
-  color: black;
 }
 
 .tagline {
   position: absolute;
   bottom: 0%;
   right: 0%;
+}
+
+.rectangle-bottom {
+  background-color: white;
+  position: absolute;
+  top: 121px;
+  left: 0px;
+  width: clamp(25vw, 38rem, 75vw);
+  height: 75px;
+  border-radius: 0 0 50px 0;
+}
+
+.rectangle-bottom:before {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  mask-image:
+    linear-gradient(to top, red, red),
+    radial-gradient(circle 15px at center, green 80%, transparent 81%);
+  mask-size:
+    12px 12px,
+    100%;
+  mask-position:
+    top left,
+    center;
+  mask-repeat: no-repeat, repeat;
+  mask-composite: subtract;
+}
+
+.rectangle-bottom p {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: "Manrope";
+  font-size: clamp(20px, 3vw, 40px);
+  left: clamp(100px, 5%, 100px);
+  color: black;
+}
+
+.rectangle-bottom-right {
+  background-color: #00c0e8;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: clamp(25vw, 35rem, 75vw);
+  height: 97px;
+  border-radius: 25px 0 0 0;
+}
+
+.rectangle-bottom-right:before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #00c0e8;
+  mask-image:
+    linear-gradient(to top, red, red),
+    radial-gradient(circle 15px at center, green 80%, transparent 81%);
+  mask-size:
+    12px 12px,
+    100%;
+  mask-position:
+    bottom right,
+    center;
+  mask-repeat: no-repeat, repeat;
+  mask-composite: subtract;
+}
+
+.rectangle-bottom-right p {
+  position: absolute;
+  top: 10px;
+  font-family: "Steelfish";
+  font-size: clamp(40px, 4vw, 70px);
+  right: clamp(157px, 5%, 157px);
+  color: #000000;
+  
+}
+
+.rectangle-bottom-right img {
+  width: 75px;
+  height: 75px;
+  right: clamp(100px, 5%, 100px);
+  position: absolute;
+  z-index: 1;
 }
