@@ -86,38 +86,38 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
 
     buffer = plot_population(data, type)
     if buffer:
-        pdf.cell(0, 10, text='График динамики населения', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения населения', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
     buffer = plot_population_percent_change(data, type, "report")
     if buffer:
-        pdf.cell(0, 10, text='График динамики изменения населения (в %)', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения населения (в %)', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
     buffer = plot_birth_rate(data, type)
     if buffer:
-        pdf.cell(0, 10, text='График динамики коэффициента рождаемости', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения коэффициента рождаемости', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
     buffer = plot_mortality_rate(data, type)
     if buffer:
         pdf.add_page()
-        pdf.cell(0, 10, text='График динамики коэффициента смертности', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения коэффициента смертности', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
     buffer = plot_natural_growth(data, type, "report")
     if buffer:
-        pdf.cell(0, 10, text='График динамики естественного прироста', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения естественного прироста', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
     buffer = plot_migration(data, type, "report")
     if buffer:
-        pdf.cell(0, 10, text='График динамики миграционного прироста', align='C')
+        pdf.cell(0, 10, text='Диаграмма динамики изменения миграционного прироста', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
