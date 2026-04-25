@@ -106,8 +106,9 @@ nav a {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: clamp(25vw, 60rem, 75vw);
-  height: 121px;
+  width: 59vw;
+  height: auto;
+  min-height: 121px;
   border-radius: 0 0 50px 0;
 }
 
@@ -133,12 +134,13 @@ nav a {
 }
 
 .hero-title {
-  position: absolute;
-  top: 0px;
   font-family: "Steelfish";
-  font-size: clamp(40px, 6vw, 95px);
-  left: clamp(100px, 5%, 100px);
+  font-size: clamp(20px, 3rem + 3vw, 110px);
+  margin-left: 100px;
   color: #00c0e8;
+  line-height: 1;
+  max-width: 90%;
+  word-wrap: break-word;
 }
 
 .tagline {
@@ -152,9 +154,11 @@ nav a {
   position: absolute;
   top: 121px;
   left: 0px;
-  width: clamp(25vw, 38rem, 75vw);
-  height: 75px;
+  width: 40vw;
+  height: auto;
+  min-height: 75px;
   border-radius: 0 0 50px 0;
+  margin-top: -1px;
 }
 
 .rectangle-bottom:before {
@@ -179,9 +183,7 @@ nav a {
 }
 
 .rectangle-bottom p {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  margin-left: 100px;
   font-family: "Manrope";
   font-size: clamp(20px, 3vw, 40px);
   left: clamp(100px, 5%, 100px);
@@ -193,7 +195,7 @@ nav a {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: clamp(25vw, 35rem, 75vw);
+  width: 41vw;
   height: 97px;
   border-radius: 25px 0 0 0;
 }
@@ -220,19 +222,21 @@ nav a {
 }
 
 .rectangle-bottom-right p {
-  position: absolute;
-  top: 10px;
   font-family: "Steelfish";
   font-size: clamp(40px, 4vw, 70px);
-  right: clamp(157px, 5%, 157px);
   color: #000000;
-  
+  line-height: 1.2;
+  margin: 0;
+  word-wrap: break-word;
+  text-align: right;   /* ← текст справа */
+  padding: 5px 157px 0 0;  /* ← отступ справа для картинки */
 }
 
 .rectangle-bottom-right img {
   width: 75px;
   height: 75px;
-  right: clamp(100px, 5%, 100px);
   position: absolute;
+  right: 100px;
+  top: 0;
   z-index: 1;
 }
