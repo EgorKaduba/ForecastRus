@@ -90,7 +90,7 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
-    buffer = plot_population_percent_change(data, type)
+    buffer = plot_population_percent_change(data, type, "report")
     if buffer:
         pdf.cell(0, 10, text='График динамики изменения населения (в %)', align='C')
         pdf.ln(8)
@@ -109,13 +109,13 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
-    buffer = plot_natural_growth(data, type)
+    buffer = plot_natural_growth(data, type, "report")
     if buffer:
         pdf.cell(0, 10, text='График динамики естественного прироста', align='C')
         pdf.ln(8)
         center_image(pdf, buffer, 160)
 
-    buffer = plot_migration(data, type)
+    buffer = plot_migration(data, type, "report")
     if buffer:
         pdf.cell(0, 10, text='График динамики миграционного прироста', align='C')
         pdf.ln(8)
@@ -159,35 +159,36 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
                 row.cell(str(item['birth_rate']) if item['birth_rate'] else '-')
                 row.cell(str(item['migration_rate']) if item['migration_rate'] else '-')
 
-    pdf.set_font('TimesNewRoman', 'B', 14)
-    pdf.ln(8)
-    pdf.multi_cell(0, 10, text="Краткое резюме динамики населения", align='C')
+    if year_from != year_to:
+        pdf.set_font('TimesNewRoman', 'B', 14)
+        pdf.ln(8)
+        pdf.multi_cell(0, 10, text="Краткое резюме динамики населения", align='C')
 
-    prompt = f"""
-    Ты аналитик-демограф. Напиши краткое аналитическое резюме (3-5 предложений) 
-    на русском языке о динамике населения региона на основе следующих данных:
-
-    Данные по региону:
-    - Период анализа: {year_from}-{year_to} гг.
-    - Данные за период: {data}, где 'year' - год, population/total_population - Численность населения на 1 января
-    соответствующего года, 'deaths' - Число умерших, 'births' - Число родившихся, 'migration' - Миграционный прирост, 
-    Общий коэффициент смертности, на 1человеко-год, 'birth_rate' - общий коэффициент рождаемости, на 1 человеко-год,
-    'migration_rate' - коэффициент миграционного прироста, на 1 человеко-год.
-
-    Требования к ответу:
-    1. Только текст, без маркдауна и лишних символов
-    2. Начать с фразы: "За период с {year_from} по {year_to} год..."
-    3. Упомянуть основные тенденции (рост/убыль)
-    4. Отметить соотношение рождаемости и смертности
-    5. Не более 500 символов
-    6. Профессиональный, но доступный стиль
-    """
-    response = LLM_request(prompt)
-    pdf.ln(0.1)
-    current_x = pdf.get_x()
-    pdf.set_x(current_x + 10)
-    pdf.set_font('TimesNewRoman', '', 14)
-    pdf.multi_cell(0, 10, text=f"              {response.replace('\u2011', '-')}", align='L')
+        prompt = f"""
+        Ты аналитик-демограф. Напиши краткое аналитическое резюме (3-5 предложений) 
+        на русском языке о динамике населения региона на основе следующих данных:
+    
+        Данные по региону:
+        - Период анализа: {year_from}-{year_to} гг.
+        - Данные за период: {data}, где 'year' - год, population/total_population - Численность населения на 1 января
+        соответствующего года, 'deaths' - Число умерших, 'births' - Число родившихся, 'migration' - Миграционный прирост, 
+        Общий коэффициент смертности, на 1человеко-год, 'birth_rate' - общий коэффициент рождаемости, на 1 человеко-год,
+        'migration_rate' - коэффициент миграционного прироста, на 1 человеко-год.
+    
+        Требования к ответу:
+        1. Только текст, без маркдауна и лишних символов
+        2. Начать с фразы: "За период с {year_from} по {year_to} год..."
+        3. Упомянуть основные тенденции (рост/убыль)
+        4. Отметить соотношение рождаемости и смертности
+        5. Не более 500 символов
+        6. Профессиональный, но доступный стиль
+        """
+        response = LLM_request(prompt)
+        pdf.ln(0.1)
+        current_x = pdf.get_x()
+        pdf.set_x(current_x + 10)
+        pdf.set_font('TimesNewRoman', '', 14)
+        pdf.multi_cell(0, 10, text=f"              {response.replace('\u2011', '-')}", align='L')
 
     if not os.path.exists("reports"):
         os.makedirs("reports")
