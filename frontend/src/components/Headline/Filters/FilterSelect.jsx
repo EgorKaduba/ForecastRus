@@ -1,7 +1,7 @@
 import './FilterSelect.css'
 
 function FilterSelect({ label, options, value, onChange }) {
-    console.log(`${label} options:`, options)  // Добавьте для проверки
+    console.log(`${label} options:`, options)
 
     const handleChange = (e) => {
         const selectedValue = e.target.value
@@ -11,7 +11,11 @@ function FilterSelect({ label, options, value, onChange }) {
     }
 
     return (
-        <select className="filter-select" value={value || label} onChange={handleChange}>
+        <select
+            className="filter-select"
+            value={value || label}
+            onChange={handleChange}
+        >
             <option value={label}>{label}</option>
             {options && options.map((option, index) => (
                 <option key={index} value={option}>
