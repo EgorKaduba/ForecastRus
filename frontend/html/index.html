@@ -1,82 +1,98 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
     <title>ForecastRus</title>
-    <link rel="icon" type="image/svg+xml" href="../image/star.svg" />
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/team.css" />
-  </head>
+    <link rel="icon" type="image/svg+xml" href="../image/star.svg"/>
+    <link rel="stylesheet" href="../css/index.css"/>
+    <link rel="stylesheet" href="../css/team.css"/>
+</head>
 
-  <body>
-    <header>
-      <a href="index.html" class="logo">
-        <img src="../image/star.svg" alt="logo" />
+<body>
+<header>
+    <a href="index.html" class="logo">
+        <img src="../image/star.svg" alt="logo"/>
         <span>ForecastRus</span>
-      </a>
-      <nav>
+    </a>
+    <nav>
         <ul>
-          <li><a href="index.html">Главная</a></li>
-          <li><a href="index.html">Мониторинг</a></li>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="index.html">Мониторинг</a></li>
         </ul>
-      </nav>
-    </header>
+    </nav>
+</header>
 
-    <section class="hero-first">
-      <img src="../image/hero-title.jpg" alt="фон" class="hero-bg" />
-      <div class="rectangle-top">
+<section class="hero-first">
+    <img src="../image/hero-title.jpg" alt="фон" class="hero-bg"/>
+    <div class="rectangle-top">
         <h1 class="hero-title">МОНИТОРИНГ И ПРОГНОЗИРОВАНИЕ</h1>
         <div class="rectangle-bottom">
-          <p>Численности населения</p>
+            <p>Численности населения</p>
         </div>
-      </div>
+    </div>
 
-      <div class="rectangle-bottom-right">
+    <div class="rectangle-bottom-right">
         <p>КРУТЫЕ ПЕРЦЫ</p>
-        <img src="../image/starB.svg" alt="logo" />
-      </div>
-    </section>
-    <script src="../js/adaptive_rectangle.js"></script>
+        <img src="../image/starB.svg" alt="logo"/>
+    </div>
+</section>
 
-    <section class="team-section">
-      <div class="team-photo">
-        <img src="../image/hero-team.jpg" alt="Команда из 5 разработчиков" />
+<section class="team-section">
+    <div class="team-photo">
+        <img src="../image/hero-team.jpg" alt="Команда из 5 разработчиков"/>
 
         <div class="team-label group-backend">
-          <div class="group-title">BACKEND-РАЗРАБОТЧИКИ</div>
+            <div class="group-title">BACKEND-РАЗРАБОТЧИКИ</div>
 
-          <!-- Подписи под стрелками к конкретным людям -->
-          <div class="member-labels">
-            <div class="member-label" id="max">
-              <span class="member-name">МАКСИМ</span>
-              <img src="../image/arrow-max.svg" alt="logo" id="arrow-max" />
+            <!-- Подписи под стрелками к конкретным людям -->
+            <div class="member-labels">
+                <div class="member-label" id="max">
+                    <span class="member-name">МАКСИМ</span>
+                    <img src="../image/arrow-max.svg" alt="Стрелка" id="arrow-max"/>
+                </div>
+                <div class="member-label" id="egor">
+                    <span id="teamlead">TEAM<br/>LEAD</span>
+                    <div class="member-name-wrapper">
+                        <span class="member-name">ЕГОР</span>
+                        <img src="../image/crown-egor.svg" id="crown"/>
+                    </div>
+                    <img src="../image/arrow-egor.svg" alt="Стрелка" id="arrow-egor"/>
+                </div>
             </div>
-
-            <div class="member-label" id="egor">
-              <span id="teamlead">TEAM<br />LEAD</span>
-              <div class="member-name-wrapper">
-                <span class="member-name">ЕГОР</span>
-                <img src="../image/crown-egor.svg" id="crown" />
-              </div>
-              <img src="../image/arrow-egor.svg" alt="logo" id="arrow-egor" />
-            </div>
-          </div>
         </div>
 
         <div class="team-label group-frontend">
-          <div class="group-title">FRONTEND-РАЗРАБОТЧИКИ<br />ДИЗАЙНЕР</div>
+            <div class="group-title">FRONTEND-РАЗРАБОТЧИКИ<br/>ДИЗАЙНЕР</div>
 
-          <div class="member-labels">
-            <div class="member-label" id="vlada">
-              <div class="member-name-wrapper">
-                <span class="member-name">ВЛАДИСЛАВА</span>
-                <img src="../image/starW.svg" id="star" />
-              </div>
-              <img src="../image/arrow-vlada.svg" alt="logo" id="arrow-vlada" />
+            <div class="member-labels">
+                <div class="member-label" id="vlada">
+                    <div class="member-name-wrapper">
+                        <span class="member-name">ВЛАДИСЛАВА</span>
+                        <img src="../image/starW.svg" id="star"/>
+                    </div>
+                    <img src="../image/arrow-vlada.svg" alt="Стрелка" id="arrow-vlada"/>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
-  </body>
+
+        <div class="team-label group-ml">
+            <div class="group-title">ML-РАЗРАБОТЧИКИ</div>
+            <div class="member-labels">
+                <div class="member-label" id="danya">
+                    <span class="member-name">ДАНИЛА</span>
+                    <img src="../image/arrow-danya.svg" alt="Стрелка" id="arrow-danya"/>
+                </div>
+                <div class="member-label" id="pasha">
+                    <span class="member-name">ПАВЕЛ</span>
+                    <img src="../image/arrow-pasha.svg" alt="Стрелка" id="arrow-pasha"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <p class="copyright">© 2026 ForecastRus. Все права защищены.</p>
+</footer>
+<script src="../js/adaptive_rectangle.js"></script>
+</body>
 </html>

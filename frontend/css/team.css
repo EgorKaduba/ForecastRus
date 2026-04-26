@@ -1,14 +1,14 @@
 .team-section {
   position: relative;
   width: 100%;
-  overflow-x: auto;
-  min-width: 1920px;
+  height: 800px;
+  margin: 0;
 }
 
 .team-photo {
+  width: 1920px;
   position: relative;
   display: inline-block;
-  width: 100%;
 }
 
 .team-photo img {
@@ -19,7 +19,7 @@
 
 .team-label {
   position: absolute;
-  top: 100px;
+  top: 130px;
   text-align: center;
 }
 
@@ -34,8 +34,8 @@
 }
 
 .group-ml {
-  left: 72.5%;
-  transform: translateX(-50%);
+  left: 60%;
+  transform: translateX(50%);
 }
 
 .group-title {
@@ -106,9 +106,9 @@
 /* Корона над буквой Е */
 #crown {
   position: absolute;
-  left: -10px; /* ровно над началом текста (над буквой Е) */
-  top: -15px; /* поднять над буквой */
-  width: 1.5em; /* примерно 30-35px */
+  left: -21px; /* ровно над началом текста (над буквой Е) */
+  top: -22px; /* поднять над буквой */
+  width: 35px; /* примерно 30-35px */
   height: auto;
   transform: rotate(-20deg) translateX(-10%); /* лёгкий сдвиг для нахлёста на Е */
   pointer-events: none;
@@ -132,12 +132,12 @@
 }
 
 #egor .member-name-wrapper {
-  margin-top: 10px; /* имя на том же уровне, что и Максим */
+  margin-top: 10px;
 }
 
 #arrow-max{
-    width: 110px;
-    height: 130px;
+    width: 65px;
+    height: 90px;
 }
 
 #arrow-egor{
@@ -158,9 +158,65 @@
     margin-top: -35%;
 }
 
-#arrow-vlada{
-    width: 110px;
+#vlada .member-name-wrapper {
+  margin-top: 24px;
+}
+
+#arrow-vlada {
+    width: 130px;
+    height: 100px;
+    margin-top: 60px;
+    margin-left: 200px;
+    transform: rotate(-20deg);
+}
+
+.group-ml #pasha {
+    left: 100%;
+}
+
+#arrow-pasha {
+    width: 150px;
+    height: 140px;
+    margin-top: 10px;
+    margin-left: 220px;
+    transform: rotate(5deg);
+}
+
+.group-ml #danya {
+    left: 0;
+}
+
+#arrow-danya {
+    width: 80px;
     height: 70px;
-    margin-top: 90px;
-    transform: rotate(-25deg);
+    margin-top: 0;
+    margin-left: -50px;
+}
+
+.team-section:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.footer {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: white;
+  width: 100%;
+  min-height: 100px;
+  display: block;
+  clear: both;
+  position: relative;
+  z-index: 1;
+}
+
+.copyright {
+  font-family: "Manrope";
+  font-size: 16px;
+  text-align: center;
+  padding: 40px 20px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
 }
