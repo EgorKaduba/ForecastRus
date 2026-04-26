@@ -2,11 +2,11 @@ import './Headline.css'
 import Filters from './Filters/Filters.jsx'
 import Heading from "./Heading.jsx"
 
-function Headline() {
+function Headline({ onYearChange }) {
     return (
         <div className="Headline">
             <div className="Headline-filters">
-                <Filters />
+                <Filters onYearChange={onYearChange} />
             </div>
             <Heading />
         </div>

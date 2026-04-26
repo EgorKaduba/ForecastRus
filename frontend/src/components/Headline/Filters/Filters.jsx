@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import './Filters.css'
 import FilterSelect from './FilterSelect.jsx'
 import {
@@ -8,19 +8,28 @@ import {
     fetchRepublic
 } from '../../../services/api.js'
 
-function Filters() {
+function Filters({onYearChange}) {
     const [regions, setRegions] = useState([])
     const [lands, setLands] = useState([])
     const [areas, setAreas] = useState([])
     const [republics, setRepublics] = useState([])
-    const [federalCity, setFederalCity] = useState([])
+    const [years, setYears] = useState([])
 
     const [selectedRegion, setSelectedRegion] = useState('')
     const [selectedLand, setSelectedLand] = useState('')
     const [selectedArea, setSelectedArea] = useState('')
     const [selectedRepublic, setSelectedRepublic] = useState('')
+    const [selectedYear, setSelectedYear] = useState('2023')
     const [searchQuery, setSearchQuery] = useState('')
-
+    const generateYearsList = () => {
+        const startYear = 2010
+        const endYear = 2023
+        const yearsList = []
+        for (let year = startYear; year <= endYear; year++) {
+            yearsList.push(year.toString())
+        }
+        return yearsList
+    }
     useEffect(() => {
         const loadData = async () => {
             const [
@@ -38,10 +47,16 @@ function Filters() {
             setLands(landsData)
             setAreas(areasData)
             setRepublics(republicsData)
+            setYears(generateYearsList())
         }
         loadData()
     }, [])
-
+    const handleYearChange = (value) => {
+        setSelectedYear(value)
+        if (onYearChange) {
+            onYearChange(value)
+        }
+    }
     return (
         <div className="filters">
             <div className="filters-container">
@@ -68,6 +83,13 @@ function Filters() {
                     options={republics}
                     value={selectedRepublic}
                     onChange={setSelectedRepublic}
+                />
+
+                <FilterSelect
+                    label="ГОД"
+                    options={years}
+                    value={selectedYear}
+                    onChange={handleYearChange}
                 />
 
                 <input
