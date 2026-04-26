@@ -1,0 +1,8 @@
+.Filters {
+    background-color: #00c0e8;
+    border-top-right-radius: 25px;
+    min-height: 100px;
+    width: 100%;
+    max-width: calc(100% - 100px);
+    box-sizing: border-box;
+}
