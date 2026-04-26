@@ -1,0 +1,19 @@
+.logo {
+    display: flex;
+    margin-left: 100px;
+    align-items: center;
+}
+
+.logo_image {
+    width: 90px;
+    height: 90px;
+    padding-top: 5px;
+}
+
+.logo_text {
+    transform: translateX(-40px);
+    font-family: "Manrope", sans-serif;
+    padding-top: 15px;
+    font-size: 35px;
+    position: relative;
+}
