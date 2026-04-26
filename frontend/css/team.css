@@ -1,0 +1,222 @@
+.team-section {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.team-photo {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.team-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.team-label {
+  position: absolute;
+  top: 130px;
+  text-align: center;
+}
+
+.group-backend {
+  left: 25%;
+  transform: translateX(-50%);
+}
+
+.group-frontend {
+  left: 51%;
+  transform: translateX(-50%);
+}
+
+.group-ml {
+  left: 60%;
+  transform: translateX(50%);
+}
+
+.group-title {
+  font-family: "Manrope";
+  font-size: clamp(20px, 6vw, 30px);
+  color: #000000;
+  padding: 6px 14px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.member-labels {
+  position: absolute;
+  top: -40%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.member-label {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.member-name {
+  font-family: "Manrope-eb";
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 700;
+  color: #ffffff;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.group-backend #max,
+.group-backend #egor {
+  top: 0; /* или любое другое одинаковое значение */
+}
+
+.group-backend #max {
+  left: 0;
+}
+
+.group-backend #egor {
+  left: 100%;
+}
+
+/* Контейнер для имени Егора с абсолютным позиционированием короны */
+.member-name-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.member-name-wrapper .member-name {
+  display: block;
+  font-size: clamp(22px, 4vw, 30px);
+  padding: 0;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Корона над буквой Е */
+#crown {
+  position: absolute;
+  left: -21px; /* ровно над началом текста (над буквой Е) */
+  top: -22px; /* поднять над буквой */
+  width: 35px; /* примерно 30-35px */
+  height: auto;
+  transform: rotate(-20deg) translateX(-10%); /* лёгкий сдвиг для нахлёста на Е */
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Контейнер для TEAM LEAD над именем */
+#egor {
+  position: relative;
+}
+
+/* TEAM LEAD над именем, по центру */
+#teamlead {
+  position: absolute;
+  top: -10px; /* TEAM LEAD над именем, не занимает места */
+  left: 37%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1;
+  font-size: 11px;
+}
+
+#egor .member-name-wrapper {
+  margin-top: 10px;
+}
+
+#arrow-max{
+    width: 65px;
+    height: 90px;
+}
+
+#arrow-egor{
+    width: 100px;
+    height: 65px;
+    margin-top: 5px;
+    transform: rotate(25deg);
+}
+
+.group-frontend #vlada{
+    left: 55%;
+}
+
+#star{
+    width: 80px;
+    height: 80px;
+    margin-left: -30%;
+    margin-top: -35%;
+}
+
+#vlada .member-name-wrapper {
+  margin-top: 24px;
+}
+
+#arrow-vlada {
+    width: 130px;
+    height: 100px;
+    margin-top: 60px;
+    margin-left: 200px;
+    transform: rotate(-20deg);
+}
+
+.group-ml #pasha {
+    left: 100%;
+}
+
+#arrow-pasha {
+    width: 150px;
+    height: 140px;
+    margin-top: 10px;
+    margin-left: 220px;
+    transform: rotate(5deg);
+}
+
+.group-ml #danya {
+    left: 0;
+}
+
+#arrow-danya {
+    width: 100px;
+    height: 90px;
+    margin-top: 0;
+    margin-left: -50px;
+}
+
+.team-section:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.footer {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: white;
+  width: 100%;
+  min-height: 100px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  margin-top: -50px;  
+}
+
+.copyright {
+  font-family: "Manrope";
+  font-size: 16px;
+  text-align: center;
+  padding: 40px 20px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
