@@ -1,0 +1,25 @@
+header {
+    background-color: white;
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding-left: 30px;
+        padding-right: 30px;
+        min-height: 80px;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        padding-left: 15px;
+        padding-right: 15px;
+        min-height: 70px;
+    }
+}

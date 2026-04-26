@@ -88,7 +88,6 @@
   left: 100%;
 }
 
-/* Контейнер для имени Егора с абсолютным позиционированием короны */
 .member-name-wrapper {
   position: relative;
   display: inline-block;
@@ -103,27 +102,24 @@
   z-index: 1;
 }
 
-/* Корона над буквой Е */
 #crown {
   position: absolute;
-  left: -21px; /* ровно над началом текста (над буквой Е) */
-  top: -22px; /* поднять над буквой */
-  width: 35px; /* примерно 30-35px */
+  left: -21px; 
+  top: -22px; 
+  width: 35px; 
   height: auto;
-  transform: rotate(-20deg) translateX(-10%); /* лёгкий сдвиг для нахлёста на Е */
+  transform: rotate(-20deg) translateX(-10%); 
   pointer-events: none;
   z-index: 2;
 }
 
-/* Контейнер для TEAM LEAD над именем */
 #egor {
   position: relative;
 }
 
-/* TEAM LEAD над именем, по центру */
 #teamlead {
   position: absolute;
-  top: -10px; /* TEAM LEAD над именем, не занимает места */
+  top: -10px; 
   left: 37%;
   transform: translateX(-50%);
   white-space: nowrap;
