@@ -5,7 +5,6 @@ import {
     fetchLands,
     fetchRegions,
     fetchArea,
-    fetchFederalCity,
     fetchRepublic
 } from '../../../services/api.js'
 
@@ -20,7 +19,6 @@ function Filters() {
     const [selectedLand, setSelectedLand] = useState('')
     const [selectedArea, setSelectedArea] = useState('')
     const [selectedRepublic, setSelectedRepublic] = useState('')
-    const [selectedFederalCity, setSelectedFederalCity] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
 
     useEffect(() => {
@@ -29,20 +27,17 @@ function Filters() {
                 regionData,
                 landsData,
                 areasData,
-                republicsData,
-                federalCityData
+                republicsData
             ] = await Promise.all([
                 fetchRegions(),
                 fetchLands(),
                 fetchArea(),
-                fetchRepublic(),
-                fetchFederalCity()
+                fetchRepublic()
             ])
             setRegions(regionData)
             setLands(landsData)
             setAreas(areasData)
             setRepublics(republicsData)
-            setFederalCity(federalCityData)
         }
         loadData()
     }, [])
@@ -73,12 +68,6 @@ function Filters() {
                     options={republics}
                     value={selectedRepublic}
                     onChange={setSelectedRepublic}
-                />
-                <FilterSelect
-                    label="Город ФН"
-                    options={federalCity}
-                    value={selectedFederalCity}
-                    onChange={setSelectedFederalCity}
                 />
 
                 <input

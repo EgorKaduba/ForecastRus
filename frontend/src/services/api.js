@@ -9,25 +9,19 @@ export async function fetchRegions() {
 }
 
 export async function fetchLands() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/regions/types/Край`)
+    const response = await fetch(`${API_BASE_URL}/api/v1/regions/krais`)
     const data = await response.json()
     return data.map(item => item.region_name)
 }
 
 export async function fetchArea() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/regions/types/Область`)
+    const response = await fetch(`${API_BASE_URL}/api/v1/regions/obls`)
     const data = await response.json()
     return data.map(item => item.region_name)
 }
 
 export async function fetchRepublic() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/regions/types/Республика`)
-    const data = await response.json()
-    return data.map(item => item.region_name)
-}
-
-export async function fetchFederalCity() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/regions/types/ГородФН`)
+    const response = await fetch(`${API_BASE_URL}/api/v1/regions/republics`)
     const data = await response.json()
     return data.map(item => item.region_name)
 }
