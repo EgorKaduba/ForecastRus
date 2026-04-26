@@ -1,12 +1,14 @@
 import './Headline.css'
-
-import Heading from "./Heading.jsx";
-
+import Filters from './Filters/Filters.jsx'
+import Heading from "./Heading.jsx"
 
 function Headline() {
     return (
         <div className="Headline">
-            <Heading/>
+            <div className="Headline-filters">
+                <Filters />
+            </div>
+            <Heading />
         </div>
     )
 }
