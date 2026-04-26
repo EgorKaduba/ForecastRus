@@ -8,17 +8,10 @@ header {
     margin: 0;
 }
 
-@media (max-width: 1024px) {
-    header {
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-}
-
 @media (max-width: 768px) {
     header {
-        padding-left: 25px;
-        padding-right: 25px;
+        padding-left: 30px;
+        padding-right: 30px;
         min-height: 80px;
     }
 }

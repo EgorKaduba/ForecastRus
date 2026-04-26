@@ -1,5 +1,5 @@
 import './Navigation.css'
-import BurgerMenu from './BurgerMenu'
+import BurgerMenu from './BurgerMenu.jsx'
 
 function Navigation() {
     const navItems = [
