@@ -10,7 +10,7 @@
     padding-right: 100px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 20px;
 }
 
@@ -19,7 +19,6 @@
     min-width: 0;
 }
 
-/* Планшеты и маленькие ноутбуки - переносим на 1024px */
 @media (max-width: 1024px) {
     .Headline {
         min-height: 150px;
