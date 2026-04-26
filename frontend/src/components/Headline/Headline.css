@@ -1,0 +1,22 @@
+.Headline {
+    min-height: 200px;
+    background-color: white;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+@media (max-width: 768px) {
+    .Headline {
+        min-height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Headline {
+        min-height: 120px;
+    }
+}
