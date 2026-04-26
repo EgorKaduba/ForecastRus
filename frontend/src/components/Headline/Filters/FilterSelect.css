@@ -4,7 +4,7 @@
     font-family: "Manrope-eb", sans-serif;
     font-size: 1.2rem;
     font-weight: 800;
-    color: black;  /* Чёрный цвет */
+    color: rgb(0, 0, 0);  /* Чёрный цвет */
     cursor: pointer;
     padding: 8px 0;
     transition: all 0.3s ease;
@@ -13,10 +13,15 @@
 
 .filter-select option {
     background-color: #00c0e8;
-    color: black;
+    color: rgb(0, 0, 0);
     font-family: "Manrope", sans-serif;
     font-size: 1rem;
     padding: 8px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-bottom-color: #00c0e8;
 }
 
 /* Адаптивность */
