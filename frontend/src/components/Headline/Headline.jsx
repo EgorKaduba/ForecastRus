@@ -1,9 +1,13 @@
 import './Headline.css'
 
+import Heading from "./Heading.jsx";
+
 
 function Headline() {
     return (
-        <div className="Headline"></div>
+        <div className="Headline">
+            <Heading/>
+        </div>
     )
 }
 

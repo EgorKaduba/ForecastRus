@@ -1,0 +1,25 @@
+.Heading {
+    font-family: "Steelfish", sans-serif;
+    font-size: 7rem;
+    color: #00c0e8;
+    display: block;
+    text-align: right;
+}
+
+@media (max-width: 1200px) {
+    .Heading {
+        font-size: 5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .Heading {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .Heading {
+        font-size: 2rem;
+    }
+}
