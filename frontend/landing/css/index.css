@@ -91,7 +91,6 @@ nav a {
 
 .hero-first {
   position: relative;
-  min-width: 1900px;
   width: 100%;
   display: block;
 }
@@ -230,7 +229,7 @@ nav a {
   margin: 0;
   word-wrap: break-word;
   text-align: right;   /* ← текст справа */
-  padding: 5px 157px 0 0;  /* ← отступ справа для картинки */
+  padding: 5px 157px 0 0;  
 }
 
 .rectangle-bottom-right img {

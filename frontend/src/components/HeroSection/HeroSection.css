@@ -1,0 +1,136 @@
+.hero-first {
+  position: relative;
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  margin-right: -100px;
+  display: block;
+  overflow-x: hidden;
+}
+
+.hero-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rectangle-top {
+  background-color: white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 70%;
+  max-width: 800px;
+  height: auto;
+  min-height: 121px;
+  border-radius: 0 0 50px 0;
+}
+
+.hero-title {
+  font-family: "Steelfish", sans-serif;
+  font-size: clamp(20px, 3rem + 3vw, 110px);
+  margin-left: clamp(15px, 8vw, 100px);
+  color: #00c0e8;
+  line-height: 1;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.rectangle-bottom {
+  background-color: white;
+  position: absolute;
+  left: 0px;
+  width: 40%;
+  max-width: 600px;
+  height: auto;
+  min-height: 75px;
+  border-radius: 0 0 50px 0;
+  margin-top: -1px;
+}
+
+.rectangle-bottom p {
+  margin-left: clamp(15px, 8vw, 100px);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(16px, 3vw, 40px);
+  color: black;
+}
+
+.rectangle-bottom-right {
+  background-color: #00c0e8;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 41%;
+  max-width: 600px;
+  height: auto;
+  min-height: 97px;
+  border-radius: 25px 0 0 0;
+}
+
+.rectangle-bottom-right p {
+  font-family: "Steelfish", sans-serif;
+  font-size: clamp(24px, 4vw, 70px);
+  color: #000000;
+  line-height: 1.2;
+  margin: 0;
+  text-align: right;
+  padding: 5px clamp(20px, 10vw, 157px) 0 0;
+}
+
+.rectangle-bottom-right img {
+  width: clamp(30px, 6vw, 75px);
+  height: clamp(30px, 6vw, 75px);
+  position: absolute;
+  right: clamp(15px, 8vw, 100px);
+  top: 0;
+  z-index: 1;
+}
+
+@media (max-width: 1200px) {
+  .hero-first {
+    width: calc(100% + 120px);
+    margin-left: -60px;
+    margin-right: -60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-first {
+    width: calc(100% + 60px);
+    margin-left: -30px;
+    margin-right: -30px;
+  }
+
+  .rectangle-top {
+    width: 75%;
+    border-radius: 0 0 30px 0;
+  }
+
+  .rectangle-bottom {
+    width: 55%;
+  }
+
+  .rectangle-bottom-right {
+    width: 55%;
+    min-height: 75px;
+    border-radius: 20px 0 0 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .rectangle-top {
+    width: 85%;
+    min-height: 100px;
+    border-radius: 0 0 25px 0;
+  }
+
+  .rectangle-bottom {
+    width: 65%;
+    min-height: 60px;
+  }
+
+  .rectangle-bottom-right {
+    width: 65%;
+    min-height: 65px;
+    border-radius: 15px 0 0 0;
+  }
+}
