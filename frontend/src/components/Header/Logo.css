@@ -1,7 +1,8 @@
 .logo {
     display: flex;
-    margin-left: 100px;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .logo_image {

@@ -1,10 +1,12 @@
 import Logo from "./Logo.jsx";
+import './Header.css'
+import Navigation from "../Navigation/Navigation.jsx";
 
 function Header() {
     return (
         <header>
-            <Logo>
-            </Logo>
+            <Logo/>
+            <Navigation/>
         </header>
     )
 }
