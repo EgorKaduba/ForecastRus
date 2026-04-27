@@ -38,8 +38,8 @@ def get_heatmap(
     min_pop = min(x[1] for x in res)
     max_pop = max(x[1] for x in res)
 
-    color_1 = (1, 0, 0)
-    color_2 = (0, 1, 0)
+    color_1 = (0.8, 0.8, 0.8)
+    color_2 = (0.02, 0.04, 0.26)
 
     if res:
         for region in res:

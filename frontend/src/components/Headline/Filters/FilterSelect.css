@@ -1,0 +1,39 @@
+.filter-select {
+    border: none;
+    background-color: transparent;
+    font-family: "Manrope-eb", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: rgb(0, 0, 0);  /* Чёрный цвет */
+    cursor: pointer;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.filter-select option {
+    background-color: #00c0e8;
+    color: rgb(0, 0, 0);
+    font-family: "Manrope", sans-serif;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-bottom-color: #00c0e8;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .filter-select {
+        font-size: 1rem;
+        padding: 6px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-select {
+        font-size: 0.85rem;
+    }
+}

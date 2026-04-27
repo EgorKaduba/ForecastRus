@@ -9,6 +9,38 @@ reg_router = APIRouter(
     tags=["Регионы"]
 )
 
+@reg_router.get("/krais", summary="Получить список всех краев")
+def get_krais(session: SessionDep)->list[Region]:
+    statement = select(Region).where(Region.region_name.like("%край%"))
+    krais = list(session.exec(statement).all())
+
+    if not krais:
+        raise HTTPException(status_code=404, detail="Края не найдены")
+
+    return krais
+
+
+@reg_router.get("/obls", summary="Получить список всех областей")
+def get_obls(session: SessionDep)->list[Region]:
+    statement = select(Region).where(Region.region_name.like("%область%"))
+    obls = list(session.exec(statement).all())
+
+    if not obls:
+        raise HTTPException(status_code=404, detail="Области не найдены")
+
+    return obls
+
+
+@reg_router.get("/republics", summary="Получить список всех республик")
+def get_republics(session: SessionDep)->list[Region]:
+    statement = select(Region).where(Region.region_name.like("%Республика%"))
+    republics = list(session.exec(statement).all())
+
+    if not republics:
+        raise HTTPException(status_code=404, detail="Республики не найдены")
+
+    return republics
+
 
 @reg_router.get("/", summary="Получить список всех субъектов РФ")
 def read_regions(

@@ -32,3 +32,15 @@ body {
     margin: 0;
     padding: 0;
 }
+
+/* В конец файла src/index.css */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+#root {
+    overflow-x: hidden;
+    width: 100%;
+}
