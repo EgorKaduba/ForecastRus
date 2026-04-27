@@ -5,6 +5,7 @@ import Headline from '../components/Headline/Headline.jsx'
 import Map from '../components/Map/Map.jsx'
 import TopRaiting from "../components/TopRaiting/TopRaiting.jsx";
 import Demographics from "../components/Demographics/Demographics.jsx";  // ← только Demographics
+import Analytics from "../components/Analytics/Analytics.jsx";
 import { searchSubject } from '../services/api.js'
 import './ForecastingPage.css'
 
@@ -115,8 +116,6 @@ function ForecastingPage() {
                 <Map selectedYear={yearMode === 'single' ? yearData.single : yearData.compare.year1}/>
 
                 <TopRaiting selectedYear={selectedYear}/>
-
-                {/* Demographics теперь рендерится только когда есть данные */}
                 <Demographics
                     subjectData={subjectData}
                     compareData={yearMode === 'compare' ? compareData : null}
@@ -124,6 +123,7 @@ function ForecastingPage() {
                     error={error}
                     onCloseSubject={handleCloseInfo}
                 />
+                <Analytics/>
             </div>
         </>
     )

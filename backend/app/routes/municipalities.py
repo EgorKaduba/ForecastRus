@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Query, HTTPException
-from sqlmodel import select
+from sqlmodel import select, func
 
 from ..deps import SessionDep
 from ..models import Municipality, DemographicData, DemographicDataWithName
@@ -9,16 +9,126 @@ mun_router = APIRouter(
     tags=["Муниципалитеты"]
 )
 
-@mun_router.get("/federal_cities", summary="Получить список всех городов федерального назначения")
-def get_federal_cities(session: SessionDep)->list[Municipality]:
-    statement = select(Municipality).where(Municipality.mun_type.like("%Город федерального значения%"))
-    federal_cities = list(session.exec(statement).all())
+@mun_router.get("/top-growth", summary="Топ муниципалитетов с наибольшим ростом населения")
+def get_top_growth_municipalities(
+        session: SessionDep,
+        limit: int = Query(default=10, ge=1, le=50, description="Количество муниципалитетов в топе"),
+) -> list[dict]:
+    year_from = 2012
+    year_to = 2025
 
-    if not federal_cities:
-        raise HTTPException(status_code=404, detail="Города федерального назначения не найдены")
+    start_data = (
+        select(
+            DemographicData.municipality_id,
+            DemographicData.population.label('population_start')
+        )
+        .where(DemographicData.year == year_from)
+        .where(DemographicData.population.isnot(None))
+        .subquery()
+    )
 
-    return federal_cities
+    end_data = (
+        select(
+            DemographicData.municipality_id,
+            DemographicData.population.label('population_end')
+        )
+        .where(DemographicData.year == year_to)
+        .where(DemographicData.population.isnot(None))
+        .subquery()
+    )
 
+    query = (
+        select(
+            Municipality.municipality_name,
+            func.round(
+                ((end_data.c.population_end - start_data.c.population_start) /
+                 start_data.c.population_start * 100), 2
+            ).label('growth_percent')
+        )
+        .join(start_data, Municipality.municipality_id == start_data.c.municipality_id)
+        .join(end_data, Municipality.municipality_id == end_data.c.municipality_id)
+        .where(start_data.c.population_start > 0)
+        .where(end_data.c.population_end > 0)
+        .order_by(func.round(
+            ((end_data.c.population_end - start_data.c.population_start) /
+             start_data.c.population_start * 100), 2
+        ).desc())
+        .limit(limit)
+    )
+
+    results = session.exec(query).all()
+
+    if not results:
+        raise HTTPException(status_code=404, detail="Данные не найдены")
+
+    return [
+        {
+            'municipality_name': row.municipality_name,
+            'growth_percent': float(row.growth_percent)
+        }
+        for row in results
+    ]
+
+
+@mun_router.get("/top-decline", summary="Топ муниципалитетов с наибольшим снижением населения")
+def get_top_decline_municipalities(
+        session: SessionDep,
+        limit: int = Query(default=10, ge=1, le=50, description="Количество муниципалитетов в топе"),
+) -> list[dict]:
+    year_from = 2012
+    year_to = 2025
+
+    start_data = (
+        select(
+            DemographicData.municipality_id,
+            DemographicData.population.label('population_start')
+        )
+        .where(DemographicData.year == year_from)
+        .where(DemographicData.population.isnot(None))
+        .subquery()
+    )
+
+    end_data = (
+        select(
+            DemographicData.municipality_id,
+            DemographicData.population.label('population_end')
+        )
+        .where(DemographicData.year == year_to)
+        .where(DemographicData.population.isnot(None))
+        .subquery()
+    )
+
+    query = (
+        select(
+            Municipality.municipality_name,
+            func.round(
+                ((end_data.c.population_end - start_data.c.population_start) /
+                 start_data.c.population_start * 100), 2
+            ).label('growth_percent')
+        )
+        .join(start_data, Municipality.municipality_id == start_data.c.municipality_id)
+        .join(end_data, Municipality.municipality_id == end_data.c.municipality_id)
+        .where(start_data.c.population_start > 0)
+        .where(end_data.c.population_end > 0)
+        .order_by(func.round(
+            ((end_data.c.population_end - start_data.c.population_start) /
+             start_data.c.population_start * 100), 2
+        ).asc())
+        .limit(limit)
+    )
+
+    results = session.exec(query).all()
+
+    if not results:
+        raise HTTPException(status_code=404, detail="Данные не найдены")
+
+    return [
+        {
+            'municipality_name': row.municipality_name,
+            'decline_percent': abs(float(row.growth_percent))
+        }
+        for row in results
+    ]
 
 
 @mun_router.get("/", summary="Получение всех муниципалитетов РФ")

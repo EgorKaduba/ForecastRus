@@ -30,62 +30,79 @@
     border-bottom-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Стиль для одного года (как поиск - с rounded background) */
+/* Стиль для одного года */
 .year-select-single {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #00c0e8;
+    border: none;
     border-radius: 30px;
-    padding: 12px 16px;
+    padding: 12px 20px;
     font-size: 14px;
     font-family: "Manrope", sans-serif;
+    font-weight: 600;
     color: black;
     width: 140px;
     transition: all 0.3s ease;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    text-align: left;
 }
 
 .year-select-single:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: #00b8e0;
+    cursor: pointer;
 }
 
 .year-select-single:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.4);
-    border-color: #00c0e8;
+    box-shadow: 0 0 0 2px rgba(0, 192, 232, 0.3);
 }
 
+/* Стиль для выпадающего списка option */
 .year-select-single option {
     background-color: #00c0e8;
     color: black;
     font-family: "Manrope", sans-serif;
     font-size: 14px;
-    padding: 8px;
+    padding: 12px;
+    border: none;
 }
 
-/* Стиль для сравнения годов (как поиск - с rounded background) */
+/* Стиль для сравнения годов */
 .year-select-compare {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #00c0e8;
+    border: none;
     border-radius: 30px;
-    padding: 12px 16px;
+    padding: 12px 20px;
     font-size: 14px;
     font-family: "Manrope", sans-serif;
+    font-weight: 600;
     color: black;
     width: 140px;
     transition: all 0.3s ease;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    text-align: left;
 }
 
 .year-select-compare:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: #00b8e0;
 }
 
 .year-select-compare:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.4);
-    border-color: #00c0e8;
+    box-shadow: 0 0 0 2px rgba(0, 192, 232, 0.3);
 }
 
 .year-select-compare option {
@@ -93,7 +110,8 @@
     color: black;
     font-family: "Manrope", sans-serif;
     font-size: 14px;
-    padding: 8px;
+    padding: 12px;
+    border: none;
 }
 
 .year-pair {
@@ -102,17 +120,28 @@
     align-items: center;
 }
 
+.vs-text {
+    font-family: "Manrope-eb", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: black;
+}
+
 /* Адаптивность */
 @media (max-width: 1400px) {
     .mode-btn {
         font-size: 1rem;
     }
-    
+
     .year-select-single,
     .year-select-compare {
         width: 120px;
-        padding: 10px 14px;
+        padding: 10px 16px;
         font-size: 13px;
+    }
+
+    .vs-text {
+        font-size: 1rem;
     }
 }
 
@@ -120,16 +149,20 @@
     .mode-btn {
         font-size: 0.9rem;
     }
-    
+
     .year-select-single,
     .year-select-compare {
         width: 100px;
-        padding: 9px 12px;
+        padding: 9px 14px;
         font-size: 12px;
     }
-    
+
     .year-pair {
         gap: 12px;
+    }
+
+    .vs-text {
+        font-size: 0.9rem;
     }
 }
 
@@ -138,19 +171,19 @@
         flex-wrap: wrap;
         gap: 12px;
     }
-    
+
     .mode-btn {
         font-size: 0.85rem;
         padding: 6px 0;
     }
-    
+
     .year-select-single,
     .year-select-compare {
         width: 90px;
-        padding: 8px 10px;
+        padding: 8px 12px;
         font-size: 12px;
     }
-    
+
     .year-pair {
         gap: 10px;
     }
@@ -160,11 +193,11 @@
     .mode-btn {
         font-size: 0.8rem;
     }
-    
+
     .year-select-single,
     .year-select-compare {
         width: 80px;
-        padding: 7px 8px;
+        padding: 7px 10px;
         font-size: 11px;
     }
 }
@@ -174,28 +207,30 @@
         gap: 10px;
         width: 100%;
     }
-    
+
     .mode-buttons {
         width: 100%;
         justify-content: space-between;
     }
-    
+
     .mode-btn {
         font-size: 0.7rem;
         padding: 5px 0;
     }
-    
-    .year-select-single {
-        width: 100%;
-    }
-    
+
+    .year-select-single,
     .year-select-compare {
         width: 100%;
+        padding: 10px 16px;
     }
-    
+
     .year-pair {
         flex-direction: column;
         gap: 8px;
         width: 100%;
+    }
+
+    .vs-text {
+        text-align: center;
     }
 }

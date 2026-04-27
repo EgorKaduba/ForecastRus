@@ -15,8 +15,8 @@ def generate_report(
         session: SessionDep,
         id: int = Query(..., description="ID региона или муниципалитета"),
         type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-        year_from: int = Query(..., ge=2010, le=2030),
-        year_to: int = Query(..., ge=2010, le=2030)
+        year_from: int = Query(..., ge=2010, le=2035),
+        year_to: int = Query(..., ge=2010, le=2035)
 ) -> str:
     try:
         if type == "region":
