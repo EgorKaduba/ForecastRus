@@ -94,7 +94,7 @@ def add_charts(pdf: FPDF, data: list[dict], type: str) -> None:
         center_image(pdf, buffer, 160)
 
 
-def create_compact_prompt_for_recommendations(monitoring_data: list[dict], forecast_data: list[dict], object_name: str,
+def create_compact_prompt_for_recommendations(monitoring_data: Union[list[dict], None], forecast_data: list[dict], object_name: str,
                                               year_from: int, year_to: int) -> str:
     if monitoring_data:
         first_pop = monitoring_data[0].get('total_population', monitoring_data[0].get('population', 0))
@@ -109,10 +109,6 @@ def create_compact_prompt_for_recommendations(monitoring_data: list[dict], forec
     else:
         first_pop = last_hist_pop = total_births = total_deaths = total_migration = avg_birth = avg_mortality = 0
 
-    if forecast_data:
-        forecast_last_pop = forecast_data[-1].get('population', 0)
-    else:
-        forecast_last_pop = 0
 
     prompt = f"""
 Ты эксперт в области демографии, социальной политики и территориального планирования. 
@@ -128,6 +124,7 @@ def create_compact_prompt_for_recommendations(monitoring_data: list[dict], forec
 - Средняя смертность: {avg_mortality:.1f}‰
 - Естественный прирост: {total_births - total_deaths:+,} чел.
 - Миграция: {total_migration:+,} чел.
+Если реальных данных нет, то сделай рекомендации основываясь на прогнозе
 
 Прогнозные данные: {forecast_data}
 
@@ -146,8 +143,13 @@ def create_compact_prompt_for_recommendations(monitoring_data: list[dict], forec
     return prompt
 
 def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
+
     year_monitoring_to = 2025
+    if year_to < year_monitoring_to:
+        year_monitoring_to = year_to
     year_forecast_from = 2026
+    if year_from > year_forecast_from:
+        year_forecast_from = year_from
     pdf = FPDF()
     pdf.add_font('TimesNewRoman', '', 'fonts/TimesNewRomanRegular.ttf')
     pdf.add_font('TimesNewRoman', 'B', 'fonts/TimesNewRomanBold.ttf')
@@ -169,20 +171,23 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
     object_name = None
     if type == 'municipality':
         with Session(engine) as session:
-            monitoring_data = get_municipalities_by_id(session, id, year_from, year_monitoring_to)
-        if len(monitoring_data[0]['municipality_name'].split(' ')) == 1:
-            pdf.cell(0, 10, text=f'{monitoring_data[0]['municipality_type']} {monitoring_data[0]['municipality_name']}', align='C')
-            object_name = f'{monitoring_data[0]['municipality_type']} {monitoring_data[0]['municipality_name']}'
+            all_data = get_municipalities_by_id(session, id, year_from, year_to)
+        if len(all_data[0]['municipality_name'].split(' ')) == 1:
+            pdf.cell(0, 10,
+                     text=f'{all_data[0]['municipality_type']} {all_data[0]['municipality_name']}',
+                     align='C')
+            object_name = f'{all_data[0]['municipality_type']} {all_data[0]['municipality_name']}'
         else:
-            pdf.cell(0, 10, text=f'{monitoring_data[0]['municipality_name']}', align='C')
-            object_name = monitoring_data[0]['municipality_name']
+            pdf.cell(0, 10, text=f'{all_data[0]['municipality_name']}', align='C')
+            object_name = all_data[0]['municipality_name']
 
     if type == 'region':
         with Session(engine) as session:
-            monitoring_data = get_population_by_region(session, id, year_from, year_monitoring_to)
+            all_data = get_population_by_region(session, id, year_from, year_to)
+        pdf.cell(0, 10, text=f'{all_data[0]['region_name']}', align='C')
+        object_name = all_data[0]['region_name']
 
-        pdf.cell(0, 10, text=f'{monitoring_data[0]['region_name']}', align='C')
-        object_name = monitoring_data[0]['region_name']
+
 
     current_y = pdf.get_y()
     pdf.set_y(current_y + 50)
@@ -204,53 +209,68 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
 
     pdf.ln(8)
     pdf.set_x(120)
-    pdf.cell(0, 10, text=f'{year_from} - {year_to}', align='L')
+    if year_from != year_to:
+        pdf.cell(0, 10, text=f'{year_from} - {year_to}', align='L')
+    else:
+        pdf.cell(0, 10, text=f'{year_from}', align='L')
 
     pdf.set_y(-35)
 
     pdf.cell(0, 10, text=f'Москва {formatted_date.split('.')[2]}', align='C')
 
-    pdf.add_page()
+    if year_from <= year_monitoring_to:
+        pdf.add_page()
 
-    add_charts(pdf, monitoring_data, type)
+        if type == 'municipality':
+            with Session(engine) as session:
+                monitoring_data = get_municipalities_by_id(session, id, year_from, year_monitoring_to)
 
-    pdf.cell(0, 10, text='Таблица демографических показателей', align='C')
+        if type == 'region':
+            with Session(engine) as session:
+                monitoring_data = get_population_by_region(session, id, year_from, year_monitoring_to)
 
-    current_y = pdf.get_y()
-    pdf.set_y(current_y + 10)
+        add_charts(pdf, monitoring_data, type)
 
-    creat_table(pdf, type, monitoring_data)
+        pdf.cell(0, 10, text='Таблица демографических показателей', align='C')
 
-    if year_from != year_to:
-        pdf.set_font('TimesNewRoman', 'B', 14)
-        pdf.ln(8)
-        pdf.multi_cell(0, 10, text="Краткое резюме динамики населения", align='C')
+        current_y = pdf.get_y()
+        pdf.set_y(current_y + 10)
 
-        prompt = f"""
-        Ты аналитик-демограф. Напиши краткое аналитическое резюме (3-5 предложений) 
-        на русском языке о динамике населения региона на основе следующих данных:
-    
-        Данные по региону:
-        - Период анализа: {year_from}-{year_monitoring_to} гг.
-        - Данные за период: {monitoring_data}, где 'year' - год, population/total_population - Численность населения на 1 января
-        соответствующего года, 'deaths' - Число умерших, 'births' - Число родившихся, 'migration' - Миграционный прирост, 
-        Общий коэффициент смертности, на 1человеко-год, 'birth_rate' - общий коэффициент рождаемости, на 1 человеко-год,
-        'migration_rate' - коэффициент миграционного прироста, на 1 человеко-год.
-    
-        Требования к ответу:
-        1. Только текст, без маркдауна и лишних символов
-        2. Начать с фразы: "За период с {year_from} по {year_monitoring_to} год..."
-        3. Упомянуть основные тенденции (рост/убыль)
-        4. Отметить соотношение рождаемости и смертности
-        5. Не более 500 символов
-        6. Профессиональный, но доступный стиль
-        """
-        response = LLM_request(prompt)
-        pdf.ln(0.1)
-        current_x = pdf.get_x()
-        pdf.set_x(current_x + 10)
-        pdf.set_font('TimesNewRoman', '', 14)
-        pdf.multi_cell(0, 10, text=f"              {response.replace('\u2011', '-')}", align='L')
+        creat_table(pdf, type, monitoring_data)
+
+        if year_from != year_to:
+            pdf.set_font('TimesNewRoman', 'B', 14)
+            pdf.ln(8)
+            pdf.multi_cell(0, 10, text="Краткое резюме динамики населения", align='C')
+
+            prompt = f"""
+            Ты аналитик-демограф. Напиши краткое аналитическое резюме (3-5 предложений) 
+            на русском языке о динамике населения региона на основе следующих данных:
+        
+            Данные по региону:
+            - Период анализа: {year_from}-{year_monitoring_to} гг.
+            - Данные за период: {monitoring_data}, где 'year' - год, population/total_population - Численность населения на 1 января
+            соответствующего года, 'deaths' - Число умерших, 'births' - Число родившихся, 'migration' - Миграционный прирост, 
+            Общий коэффициент смертности, на 1человеко-год, 'birth_rate' - общий коэффициент рождаемости, на 1 человеко-год,
+            'migration_rate' - коэффициент миграционного прироста, на 1 человеко-год.
+        
+            Требования к ответу:
+            1. Только текст, без маркдауна и лишних символов
+            2. Начать с фразы: "За период с {year_from} по {year_monitoring_to} год..."
+            3. Упомянуть основные тенденции (рост/убыль)
+            4. Отметить соотношение рождаемости и смертности
+            5. Не более 500 символов
+            6. Профессиональный, но доступный стиль
+            """
+            response = LLM_request(prompt)
+            pdf.ln(0.1)
+            current_x = pdf.get_x()
+            pdf.set_x(current_x + 10)
+            pdf.set_font('TimesNewRoman', '', 14)
+            pdf.multi_cell(0, 10, text=f"              {response.replace('\u2011', '-')}", align='L')
+
+    else:
+        monitoring_data = None
 
     if year_to > year_monitoring_to:
         pdf.add_page()
@@ -258,6 +278,8 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
 
         if year_forecast_from == year_to:
             pdf.cell(0, 10, text=f'Прогнозная оценка на {year_to} год', align='C')
+        elif year_forecast_from > 2026:
+            pdf.cell(0, 10, text=f'Прогнозная оценка c {year_forecast_from} до {year_to} года', align='C')
         else:
             pdf.cell(0, 10, text=f'Прогнозная оценка до {year_to} года', align='C')
 
@@ -270,14 +292,6 @@ def create_report(id: int, type: str, year_from: int, year_to: int) -> str:
         if type == 'region':
             with Session(engine) as session:
                 forecast_data = get_population_by_region(session, id, year_forecast_from, year_to)
-
-        if type == 'municipality':
-            with Session(engine) as session:
-                all_data = get_municipalities_by_id(session, id, year_from, year_to)
-
-        if type == 'region':
-            with Session(engine) as session:
-                all_data = get_population_by_region(session, id, year_from, year_to)
 
         add_charts(pdf, all_data, type)
 
