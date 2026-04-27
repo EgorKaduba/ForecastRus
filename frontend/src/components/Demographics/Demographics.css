@@ -1,0 +1,377 @@
+.demographics {
+  position: relative;
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  margin-right: -100px;
+  padding: 100px 100px 150px;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.demographics-header {
+  position: relative;
+  text-align: right;
+  margin-bottom: 100px;
+}
+
+.demographics-subtitle {
+  font-family: "Steelfish", sans-serif;
+  font-size: 120px;
+  font-weight: 800;
+  color: #00c0e8;
+  margin: 0;
+  line-height: 1;
+  text-align: right;
+}
+
+.demographics-title-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 110px;
+  margin-top: 10px;
+}
+
+.demographics-year {
+  font-family: "Steelfish", sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  color: rgba(0, 192, 232, 0.5);
+  line-height: 1;
+}
+
+.demographics-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  color: #040404;
+  margin: 0;
+  line-height: 1;
+}
+
+.demographics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  row-gap: 50px;
+}
+
+.demographics-card {
+  width: 520px;
+  min-height: 300px;
+  background: #e2ffff;
+  border-radius: 30px;
+  box-shadow: 5px 4px 10px rgba(0, 192, 232, 0.3);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.demographics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 20px rgba(0, 192, 232, 0.4);
+}
+
+.card-content {
+  padding: 25px 20px 25px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-titles {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.card-title-first,
+.card-title-second {
+  font-family: "Manrope", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: #1e1e1e;
+  display: block;
+}
+
+.card-title-second {
+  margin-top: 8px;
+}
+
+.card-value-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.card-value {
+  background: #71e6ff;
+  padding: 10px 35px;
+  border-radius: 30px;
+  font-family: "Manrope", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e1e1e;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.card-description {
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #1e1e1e;
+  text-align: center;
+  padding: 0 15px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Адаптив */
+@media (max-width: 1400px) {
+  .demographics {
+    width: calc(100% + 120px);
+    margin-left: -60px;
+    margin-right: -60px;
+    padding: 80px 60px 120px;
+  }
+
+  .demographics-subtitle {
+    font-size: 90px;
+  }
+
+  .demographics-title {
+    font-size: 42px;
+  }
+
+  .demographics-year {
+    font-size: 42px;
+  }
+
+  .demographics-grid {
+    gap: 40px;
+  }
+
+  .demographics-card {
+    width: 460px;
+    min-height: 280px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 30px;
+  }
+
+  .card-value {
+    font-size: 24px;
+    padding: 8px 30px;
+  }
+
+  .card-description {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .demographics-grid {
+    gap: 35px;
+  }
+
+  .demographics-card {
+    width: 420px;
+    min-height: 260px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 28px;
+  }
+
+  .card-description {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .demographics {
+    padding: 60px 40px 80px;
+  }
+
+  .demographics-subtitle {
+    font-size: 70px;
+  }
+
+  .demographics-title {
+    font-size: 34px;
+  }
+
+  .demographics-year {
+    font-size: 36px;
+  }
+
+  .demographics-grid {
+    gap: 30px;
+  }
+
+  .demographics-card {
+    width: 380px;
+    min-height: 250px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 26px;
+  }
+
+  .card-value {
+    font-size: 22px;
+    padding: 6px 25px;
+  }
+
+  .card-description {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .demographics-card {
+    width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .demographics {
+    width: calc(100% + 60px);
+    margin-left: -30px;
+    margin-right: -30px;
+    padding: 50px 20px 60px;
+  }
+
+  .demographics-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .demographics-year {
+    position: static;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .demographics-subtitle {
+    font-size: 50px;
+  }
+
+  .demographics-title {
+    font-size: 28px;
+  }
+
+  .demographics-grid {
+    gap: 25px;
+  }
+
+  .demographics-card {
+    width: 100%;
+    max-width: 450px;
+    min-height: 240px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 24px;
+  }
+
+  .card-value {
+    font-size: 20px;
+  }
+
+  .card-description {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 550px) {
+  .demographics {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 40px 15px 50px;
+  }
+
+  .demographics-header {
+    margin-bottom: 40px;
+  }
+
+  .demographics-subtitle {
+    font-size: 38px;
+  }
+
+  .demographics-title {
+    font-size: 22px;
+  }
+
+  .demographics-year {
+    font-size: 28px;
+  }
+
+  .demographics-grid {
+    gap: 20px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 20px;
+  }
+
+  .card-value {
+    font-size: 18px;
+    padding: 5px 20px;
+    white-space: normal;
+  }
+
+  .card-description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .demographics-subtitle {
+    font-size: 32px;
+  }
+
+  .demographics-title {
+    font-size: 18px;
+  }
+
+  .card-title-first,
+  .card-title-second {
+    font-size: 18px;
+  }
+
+  .card-value {
+    font-size: 16px;
+    padding: 4px 15px;
+  }
+
+  .card-description {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .demographics-title-wrapper {
+    gap: 8px;
+    flex-direction: column; /* на очень маленьких экранах год сверху, текст снизу */
+    align-items: center;
+  }
+
+  .demographics-year {
+    font-size: 20px;
+  }
+
+  .demographics-title {
+    font-size: 20px;
+  }
+}
