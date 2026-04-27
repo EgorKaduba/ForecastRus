@@ -16,8 +16,8 @@ def chart_population(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
@@ -41,8 +41,8 @@ def chart_population_percent(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
@@ -66,8 +66,8 @@ def chart_birth_rate(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
@@ -91,8 +91,8 @@ def chart_mortality_rate(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
@@ -116,8 +116,8 @@ def chart_natural_growth(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
@@ -141,8 +141,8 @@ def chart_migration(
     session: SessionDep,
     id: int = Query(..., description="ID региона или муниципалитета"),
     type: str = Query(..., description="Тип: 'region' или 'municipality'"),
-    year_from: int = Query(..., ge=2010, le=2030),
-    year_to: int = Query(..., ge=2010, le=2030)
+    year_from: int = Query(..., ge=2010, le=2035),
+    year_to: int = Query(..., ge=2010, le=2035)
 ) -> dict:
     if type == "region":
         data = get_population_by_region(session, id, year_from, year_to)
