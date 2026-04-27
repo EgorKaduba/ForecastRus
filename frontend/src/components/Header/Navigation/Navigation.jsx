@@ -3,7 +3,7 @@ import BurgerMenu from './BurgerMenu.jsx'
 
 function Navigation() {
     const navItems = [
-        { path: "", label: "Главная" },
+        { path: "/", label: "Главная" },
         { path: "/forecasting", label: "Мониторинг" }
     ]
 

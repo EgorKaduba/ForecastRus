@@ -1,0 +1,77 @@
+/* YearSelector.css */
+.year-selector {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 192, 232, 0.1);
+    border-radius: 12px;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.mode-btn {
+    padding: 8px 16px;
+    border: 1px solid #00c0e8;
+    background: white;
+    color: #00c0e8;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+    background: #00c0e8;
+    color: white;
+}
+
+.mode-btn:hover {
+    background: #00c0e8;
+    color: white;
+}
+
+.year-inputs {
+    flex: 1;
+}
+
+.year-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: "Manrope", sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    background: white;
+}
+
+.year-pair {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.vs-text {
+    font-weight: bold;
+    color: #00c0e8;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .year-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mode-buttons {
+        justify-content: center;
+    }
+
+    .year-pair {
+        justify-content: center;
+    }
+}

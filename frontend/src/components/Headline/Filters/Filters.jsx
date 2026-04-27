@@ -1,6 +1,8 @@
-import {useState, useEffect} from 'react'
+// Filters.jsx - добавлен YearSelector
+import { useState, useEffect } from 'react'
 import './Filters.css'
 import FilterSelect from './FilterSelect.jsx'
+import YearSelector from './YearSelector.jsx'
 import {
     fetchLands,
     fetchRegions,
@@ -8,19 +10,20 @@ import {
     fetchRepublic
 } from '../../../services/api.js'
 
-function Filters({onYearChange}) {
+function Filters({ onYearChange, onRegionChange, onSearch, onSearchEnter }) {
     const [regions, setRegions] = useState([])
     const [lands, setLands] = useState([])
     const [areas, setAreas] = useState([])
     const [republics, setRepublics] = useState([])
     const [years, setYears] = useState([])
+    const [compareMode, setCompareMode] = useState('single')
 
     const [selectedRegion, setSelectedRegion] = useState('')
     const [selectedLand, setSelectedLand] = useState('')
     const [selectedArea, setSelectedArea] = useState('')
     const [selectedRepublic, setSelectedRepublic] = useState('')
-    const [selectedYear, setSelectedYear] = useState('2023')
     const [searchQuery, setSearchQuery] = useState('')
+
     const generateYearsList = () => {
         const startYear = 2010
         const endYear = 2023
@@ -30,6 +33,7 @@ function Filters({onYearChange}) {
         }
         return yearsList
     }
+
     useEffect(() => {
         const loadData = async () => {
             const [
@@ -51,21 +55,44 @@ function Filters({onYearChange}) {
         }
         loadData()
     }, [])
-    const handleYearChange = (value) => {
-        setSelectedYear(value)
+
+    const handleYearChangeWrapper = (yearData) => {
         if (onYearChange) {
-            onYearChange(value)
+            onYearChange(yearData)
         }
     }
+
+    const handleCompareModeChange = (mode) => {
+        setCompareMode(mode)
+    }
+
+    const handleSearchKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            const query = searchQuery.trim()
+            if (query && onSearchEnter) {
+                onSearchEnter(query)
+            }
+        }
+    }
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value
+        setSearchQuery(value)
+        if (onSearch) {
+            onSearch(value)
+        }
+    }
+
     return (
         <div className="filters">
             <div className="filters-container">
-                <FilterSelect
-                    label="ГОД"
-                    options={years}
-                    value={selectedYear}
-                    onChange={handleYearChange}
+                <YearSelector
+                    years={years}
+                    onYearChange={handleYearChangeWrapper}
+                    onCompareMode={handleCompareModeChange}
                 />
+
                 <FilterSelect
                     label="ВСЕ"
                     options={regions}
@@ -91,23 +118,24 @@ function Filters({onYearChange}) {
                     onChange={setSelectedRepublic}
                 />
 
-        <div className="search-wrapper">
-          <img
-            src="/src/assets/search-icon.svg"
-            alt="поиск"
-            className="search-icon"
-          />
-          <input
-            type="text"
-            className="filter-search"
-            placeholder="ПОИСК"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+                <div className="search-wrapper">
+                    <img
+                        src="/src/assets/search-icon.svg"
+                        alt="поиск"
+                        className="search-icon"
+                    />
+                    <input
+                        type="text"
+                        className="filter-search"
+                        placeholder="ПОИСК (нажмите Enter)"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        onKeyPress={handleSearchKeyPress}
+                    />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    )
 }
 
-export default Filters;
+export default Filters
