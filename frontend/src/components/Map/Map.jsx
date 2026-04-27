@@ -1,24 +1,85 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import $ from 'jquery';
 import './Map.css';
+import { fetchRegionColors } from '../../services/api.js';
 
-function Map() {
+function Map({ selectedYear }) {
+    const [colors, setColors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const mapInitialized = useRef(false);
+
+    // Функция для применения цветов к SVG
+    const applyColorsToMap = (colorsData) => {
+        console.log('Применяем цвета для года:', selectedYear, colorsData);
+
+        $('[data-code]').each(function() {
+            const code = $(this).attr('data-code');
+            const colorData = colorsData.find(item => item.code === code);
+
+            if (colorData && colorData.color) {
+                // Проверяем формат цвета и преобразуем при необходимости
+                let colorValue = colorData.color;
+
+                // Если цвет в формате "203, 43, 0" (без rgb())
+                if (typeof colorValue === 'string' && !colorValue.startsWith('rgb') && !colorValue.startsWith('#')) {
+                    // Разделяем строку по запятой и пробелу
+                    const rgbParts = colorValue.split(',').map(part => parseInt(part.trim()));
+                    if (rgbParts.length === 3 && !isNaN(rgbParts[0])) {
+                        colorValue = `rgb(${rgbParts[0]}, ${rgbParts[1]}, ${rgbParts[2]})`;
+                        console.log(`Преобразовали цвет ${colorData.color} -> ${colorValue}`);
+                    }
+                }
+
+                $(this).css('fill', colorValue);
+                console.log(`Регион ${code} покрашен в ${colorValue}`);
+            } else {
+                // Цвет по умолчанию
+                $(this).css('fill', '#337AB7');
+            }
+        });
+    };
+
+    // Загрузка цветов при изменении года
     useEffect(() => {
-        // Инициализация jQuery для карты
-        const initMap = () => {
+        if (!selectedYear) return;
+
+        const loadColors = async () => {
+            setLoading(true);
+            try {
+                const colorsData = await fetchRegionColors(selectedYear);
+                setColors(colorsData);
+                applyColorsToMap(colorsData);
+            } catch (error) {
+                console.error('Ошибка загрузки цветов:', error);
+                $('[data-code]').css('fill', '#337AB7');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadColors();
+    }, [selectedYear]);
+
+    // Инициализация jQuery для карты (один раз)
+    useEffect(() => {
+        if (mapInitialized.current) return;
+        mapInitialized.current = true;
+
+        // Небольшая задержка для полной загрузки SVG
+        setTimeout(() => {
             // Обработчики для регионов
-            $('[data-code]').mouseenter(function() {
+            $('[data-code]').off('mouseenter').on('mouseenter', function() {
                 $('.district span').html($(this).attr('data-title'));
                 $('.district').show();
             });
 
-            $('[data-code]').mouseleave(function() {
+            $('[data-code]').off('mouseleave').on('mouseleave', function() {
                 if (!$('.rf-map').hasClass("open")) {
                     $('.district').hide();
                 }
             });
 
-            $('.rf-map').on('click', '[data-code], .district-links div', function(){
+            $('.rf-map').off('click').on('click', '[data-code], .district-links div', function() {
                 let id = $(this).attr('data-code');
                 if ($('#' + id).text() != '') {
                     $('.district').show();
@@ -30,7 +91,7 @@ function Map() {
                 }
             });
 
-            $('body, .close-district').click(function() {
+            $('body, .close-district').off('click').on('click', function() {
                 $('.rf-map').removeClass('open');
                 $('[data-code]').removeClass('dropfill');
                 $('[data-code]').removeClass('mainfill');
@@ -38,10 +99,11 @@ function Map() {
                 $('.district').hide();
             });
 
-            $('.rf-map').click(function(e){
+            $('.rf-map').off('click').on('click', function(e) {
                 e.stopPropagation();
             });
 
+            $('.district-links').empty();
             $('[data-code]').each(function() {
                 let id = $(this).attr('data-code');
                 let title = $(this).attr('data-title');
@@ -49,9 +111,14 @@ function Map() {
                     $('.district-links').append('<div data-title="' + title + '" data-code="' + id + '">' + title + '</div>');
                 }
             });
-        };
 
-        initMap();
+            // Загружаем цвета для начального года
+            if (selectedYear) {
+                fetchRegionColors(selectedYear)
+                    .then(colorsData => applyColorsToMap(colorsData))
+                    .catch(error => console.error('Ошибка загрузки начальных цветов:', error));
+            }
+        }, 200);
 
         // Очистка при размонтировании
         return () => {
@@ -62,6 +129,7 @@ function Map() {
 
     return (
         <div className="map">
+            {loading && <div className="map-loading">Загрузка данных...</div>}
             <div className="rf-map">
                 <div className="district">
                     <b></b>
@@ -70,7 +138,7 @@ function Map() {
                 <div className="close-district">&times;</div>
                 <div id="RU-SAR" className="district-text">Саратов</div>
                 <div id="RU-SA" className="district-text">Саха</div>
-                <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.2" baseProfile="tiny" x="0px" y="0px" viewBox="0 0 1000 600" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0px" y="0px" viewBox="0 0 1000 600" preserveAspectRatio="none">
                     <path d="m 130.24729,259.26463 -0.71301,-1.3323 -0.83965,1.13893 -1.20312,0.61639 -0.3652,1.98343 -2.7566,-1.20341 -1.29507,1.2557 -1.79887,-1.96928 -0.51738,2.08913 -1.70104,0.51357 0.48353,2.36036 1.41813,-1.06374 1.07846,1.34199 2.31013,-0.11587 0.63117,-1.4221 0.77636,1.28888 1.63087,-0.86752 1.60105,1.08107 2.52028,-0.21377 0.38854,-1.63667 -0.76508,-2.45949 0.30997,-0.96605 c -0.75062,0.0982 -0.83803,-0.13605 -1.19347,-0.41925 z" data-title="Москва" data-code="RU-MOW"></path>
                     <path d="m 136.30673,181.67516 -2.95955,-0.98651 -3.94605,0.98651 -0.98652,3.94606 0.98652,2.95954 3.94605,1.97303 2.95955,-1.97303 1.97302,-2.95954 -1.97302,-3.94606 z" data-title="Санкт-Петербург" data-code="RU-SPE"></path>
                     <path d="m 305.00066,165.89094 -4.93257,0 -3.94605,3.94605 0.98651,3.94606 4.93257,0.98651 0.98652,0 0.98651,-0.98651 0.98651,0 0,0 0.98652,-0.98651 0,0.98651 0,0 -0.98652,0.98651 0,0 0.98652,0 0.98651,-0.98651 0,-3.94606 -1.97303,-3.94605 z m 45.37966,22.68982 1.97303,0.98652 0,0.98651 0,0.98652 0,0.98651 2.95954,1.97303 1.97303,-2.95954 -0.98652,-2.95955 -0.98651,-2.95954 0,0 0,-1.97303 -0.98651,-1.97303 -1.97303,0 0,1.97303 -0.98652,0 -0.98651,0 0,4.93257 z m -27.6224,-0.98651 -2.95954,-0.98651 -3.94606,-0.98652 -4.93257,0.98652 0,0 0.98651,0.98651 0,1.97303 -1.97303,0 -0.98651,-0.98652 0,-0.98651 0.98651,-0.98651 -2.95954,-0.98652 -2.95954,0 -0.98651,0 -0.98652,-0.98651 -5.91908,0.98651 -5.91909,-0.98651 -0.98651,-0.98652 0,-0.98651 0,0.98651 0,0 0,0.98652 -0.98652,0 0,0.98651 0,1.97303 0,0 -0.98651,-1.97303 -1.97303,-0.98651 -0.98652,-0.98652 -3.94605,2.95955 -3.94606,3.94605 -4.93257,-1.97303 -3.94606,-2.95954 0.98652,-2.95954 0.98651,-1.97303 -0.98651,-1.97303 -0.98652,-1.97303 3.94606,-1.97303 2.95954,-0.98651 4.93257,2.95954 0.98652,-0.98651 0.98651,-0.98652 0,-0.98651 0.98652,0 0,-2.95954 0,-2.95955 -2.95955,-3.94605 -3.94605,-2.95955 -0.98652,-2.95954 -0.98651,-0.98651 0,2.95954 0,4.93257 -5.91909,4.93257 -4.93257,3.94606 0,2.95954 0,2.95955 -3.94606,2.95954 -1.97302,1.97303 0,0.98651 0,1.97303 3.94605,5.91908 2.95954,5.91909 0.98652,1.97303 0.98651,0.98651 0,0.98652 1.97303,0 0,0 0,-0.98652 1.97303,-0.98651 1.97303,0 1.97303,0.98651 1.97303,1.97303 0,0 6.9056,0 7.89211,0.98652 1.97303,-0.98652 0.98651,-0.98651 0.98652,0.98651 0,0.98652 1.97303,-0.98652 1.97302,0 4.93258,3.94606 5.91908,4.93257 29.59543,17.75726 0.98651,0.98651 0.98652,0.98652 5.91908,-0.98652 6.9056,-1.97303 0,-0.98651 0.98652,-1.97303 0.98651,0.98651 0.98651,0 1.97303,-0.98651 1.97303,-0.98651 1.97303,-0.98652 1.97303,-0.98651 0.98651,-0.98652 0.98652,0 0.98651,0 1.97303,0.98652 1.97303,-2.95955 0,-1.97302 -0.98652,-0.98652 -1.97302,-2.95954 0.98651,-0.98652 0.98651,-0.98651 1.97303,-1.97303 0,-1.97303 -2.95954,-4.93257 -3.94606,-3.94606 -4.93257,-3.94605 -0.98651,-0.98652 -0.98652,-0.98651 -0.98651,0.98651 -0.98652,0.98652 0,0 -0.98651,-0.98652 -0.98651,0 -0.98652,0.98652 0,5.91908 -0.98651,5.91909 0,0 0,0 -0.98652,-0.98652 -0.98651,0 -1.97303,0.98652 -1.97303,-0.98652 -0.98651,0 -0.98652,1.97303 -2.95954,0.98652 -0.98651,-1.97303 0.98651,-1.97303 1.97303,-0.98651 0.98651,0 0,-1.97303 -0.98651,-1.97303 0.98651,0 -6.9056,-0.98652 -5.91908,0.98652 -1.97303,-2.95954 -5.91909,-1.97303 -3.94605,0.98651 0,0.98652 -0.98652,0.98651 -0.98651,-1.97303 -1.97303,0 -0.98651,0.98652 -0.98652,0 0,0 0.98652,-0.98652 0,-0.98651 0,-0.98652 -1.97303,-0.98651 -1.97303,0 0.98651,-0.98652 0,-0.98651 0.98652,0 0.98651,0 1.97303,0.98651 0.98651,-1.97302 0.98652,-1.97303 0.98651,0 0.98652,-0.98652 0,-0.98651 -0.98652,0 1.97303,0 1.97303,0 0,0 z" data-title="Ненецкий АО" data-code="RU-NEN"></path>

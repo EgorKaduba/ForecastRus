@@ -9,6 +9,17 @@ mun_router = APIRouter(
     tags=["Муниципалитеты"]
 )
 
+@mun_router.get("/federal_cities", summary="Получить список всех городов федерального назначения")
+def get_federal_cities(session: SessionDep)->list[Municipality]:
+    statement = select(Municipality).where(Municipality.mun_type.like("%Город федерального значения%"))
+    federal_cities = list(session.exec(statement).all())
+
+    if not federal_cities:
+        raise HTTPException(status_code=404, detail="Города федерального назначения не найдены")
+
+    return federal_cities
+
+
 
 @mun_router.get("/", summary="Получение всех муниципалитетов РФ")
 def read_municipalities(

@@ -102,7 +102,6 @@
 }
 
 .rf-map [data-code] {
-    fill: #337AB7;
     transition: fill 0.2s;
     cursor: pointer;
 }
@@ -161,50 +160,6 @@
     font-family: Verdana, sans-serif;
     padding: 4px;
     cursor: pointer;
-}
-
-.rf-map .district-links div:after {
-    content: " | ";
-    color: #337AB7;
-}
-
-.rf-map .district-links div:last-child:after {
-    content: "";
-}
-
-.dropfill {
-    fill: #337AB7!important;
-}
-
-.mainfill {
-    fill: #1d4567!important;
-}
-
-/* Цвета регионов */
-.rf-map [data-code="RU-SAR"] {
-    fill: #116f21;
-    cursor: pointer;
-}
-
-.rf-map [data-code="RU-SA"] {
-    fill: #d17520;
-    cursor: pointer;
-}
-
-.rf-map [data-code="RU-KO"] {
-    fill: #901aad;
-}
-
-.rf-map [data-code="RU-SAR"]:hover {
-    fill: #1bad33;
-}
-
-.rf-map [data-code="RU-SA"]:hover {
-    fill: #e3954b;
-}
-
-.rf-map [data-code="RU-KO"]:hover {
-    fill: #bf37e1;
 }
 
 @media (min-width: 768px) {
