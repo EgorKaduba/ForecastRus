@@ -375,3 +375,112 @@
     font-size: 20px;
   }
 }
+/* Demographics.css — добавьте в конец файла */
+
+/* Кнопка закрытия */
+.demographics .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  color: #000;
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-weight: bold;
+}
+
+.demographics .close-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+/* Состояние ошибки */
+.demographics-error-content {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  color: #f44336;
+}
+
+/* Стили для сравнения */
+.compare-diff {
+  text-align: center;
+  padding: 12px;
+  border-radius: 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.compare-diff.positive {
+  background: rgba(76, 175, 80, 0.15);
+  color: #2e7d32;
+}
+
+.compare-diff.negative {
+  background: rgba(244, 67, 54, 0.15);
+  color: #c62828;
+}
+
+.compare-diff.neutral {
+  background: rgba(158, 158, 158, 0.15);
+  color: #616161;
+}
+
+/* Адаптив для сравнения */
+@media (max-width: 768px) {
+  .compare-diff {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* Demographics.css — добавьте в конец файла */
+
+.demographics-error-content {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  color: #f44336;
+}
+
+.demographics-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.demographics-loading .spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 192, 232, 0.2);
+  border-top: 4px solid #00c0e8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.demographics-error-content {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  color: #f44336;
+}
