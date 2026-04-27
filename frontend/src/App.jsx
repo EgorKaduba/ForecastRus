@@ -1,33 +1,18 @@
-import { useState } from "react"; // Важно: импортируем useState
-import "./App.css";
-import Header from "./components/Header/Header.jsx";
-import Headline from "./components/Headline/Headline.jsx";
-import Map from "./components/Map/Map.jsx";
-import TopRaiting from "./components/TopRaiting/TopRaiting.jsx";
-import Demographics from "./components/Demographics/Demographics.jsx";
-import Analytics from "./components/Analytics/Analytics.jsx";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import ForecastingPage from './pages/ForecastingPage'
 
 function App() {
-  const [selectedYear, setSelectedYear] = useState(2022);
-
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-  };
-
-  return (
-    <div className="App">
-      <Header />
-      <Headline onYearChange={handleYearChange} />
-      <Map selectedYear={selectedYear} />
-      {selectedYear && (
-        <>
-          <TopRaiting selectedYear={selectedYear} />
-          <Demographics selectedYear={selectedYear} />
-        </>
-      )}
-      <Analytics/>
-    </div>
-  );
+    return (
+        <div className="app-container">
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/forecasting" element={<ForecastingPage />} />
+                </Routes>
+            </Router>
+        </div>
+    )
 }
 
-export default App;
+export default App

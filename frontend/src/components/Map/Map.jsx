@@ -129,7 +129,6 @@ function Map({ selectedYear }) {
 
     return (
         <div className="map">
-            {loading && <div className="map-loading">Загрузка данных...</div>}
             <div className="rf-map">
                 <div className="district">
                     <b></b>

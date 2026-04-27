@@ -77,7 +77,7 @@
 
 .group-backend #max,
 .group-backend #egor {
-  top: 0; /* или любое другое одинаковое значение */
+  top: 0; 
 }
 
 .group-backend #max {
@@ -174,7 +174,7 @@
     width: 150px;
     height: 140px;
     margin-top: 10px;
-    margin-left: 220px;
+    margin-left: 100px;
     transform: rotate(5deg);
 }
 
