@@ -72,10 +72,14 @@ def plot_population(data: list[dict], type: str) -> Union[BytesIO, None]:
             pop_text = f'{pop / 1_000:.1f}K'
         else:
             pop_text = str(pop)
-
-        ax.annotate(pop_text, (year, pop), xytext=(15, 10), textcoords='offset points',
-                    ha='center', fontsize=9, color='#00C0E8',
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+        if len(years) < 26:
+            ax.annotate(pop_text, (year, pop), xytext=(15, 10), textcoords='offset points',
+                        ha='center', fontsize=9, color='#00C0E8',
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+        else:
+            ax.annotate(pop_text, (year, pop), xytext=(15, 10), textcoords='offset points',
+                        ha='center', fontsize=6, color='#00C0E8',
+                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -169,11 +173,14 @@ def plot_population_percent_change(data: list[dict], type: str, for_what: str) -
                 text_color = '#00C040' if change >= 0 else '#FF4444'
                 offset = 12 if change >= 0 else -18
 
-                ax.annotate(change_text, (year, change), xytext=(15, offset),
-                            textcoords='offset points', ha='center', fontsize=9,
-                            color=text_color,
-                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                      edgecolor=text_color, alpha=1))
+                if len(years) < 26:
+                    ax.annotate(change_text, (year, change), xytext=(15, offset), textcoords='offset points',
+                                ha='center', fontsize=9, color=text_color,
+                                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=text_color, alpha=1))
+                else:
+                    ax.annotate(change_text, (year, change), xytext=(15, offset+2), textcoords='offset points',
+                                ha='center', fontsize=6, color=text_color,
+                                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=text_color, alpha=1))
 
     if for_what == "api":
         for year, change in zip(years, percent_changes):
@@ -183,11 +190,14 @@ def plot_population_percent_change(data: list[dict], type: str, for_what: str) -
                 text_color = '#00C0E8'
                 offset = 12 if change >= 0 else -18
 
-                ax.annotate(change_text, (year, change), xytext=(15, offset),
-                            textcoords='offset points', ha='center', fontsize=9,
-                            color=text_color,
-                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                      edgecolor=text_color, alpha=1))
+                if len(years) < 26:
+                    ax.annotate(change_text, (year, change), xytext=(15, offset), textcoords='offset points',
+                                ha='center', fontsize=9, color=text_color,
+                                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=text_color, alpha=1))
+                else:
+                    ax.annotate(change_text, (year, change), xytext=(15, offset+2), textcoords='offset points',
+                                ha='center', fontsize=6, color=text_color,
+                                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -265,13 +275,24 @@ def plot_birth_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     for year, rate in zip(years, birth_rates):
         if rate > 0.099:
-            ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
-                        ha='center', fontsize=9, color='#00C0E8',
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            if len(years) < 26:
+                ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=9, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            else:
+                ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=6, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+
         else:
-            ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
-                        ha='center', fontsize=9, color='#00C0E8',
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            if len(years) < 26:
+                ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=9, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            else:
+                ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=6, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -349,13 +370,24 @@ def plot_mortality_rate(data: list[dict], type: str) -> Union[BytesIO, None]:
 
     for year, rate in zip(years, mortality_rates):
         if rate > 0.099:
-            ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
-                        ha='center', fontsize=9, color='#00C0E8',
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            if len(years) < 26:
+                ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=9, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            else:
+                ax.annotate(f'{rate:.2f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=6, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+
         else:
-            ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
-                        ha='center', fontsize=9, color='#00C0E8',
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            if len(years) < 26:
+                ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=9, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
+            else:
+                ax.annotate(f'{rate:.4f}%', (year, rate), xytext=(15, 10), textcoords='offset points',
+                            ha='center', fontsize=6, color='#00C0E8',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#00C0E8', alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -452,12 +484,18 @@ def plot_natural_growth(data: list[dict], type: str, for_what: str) -> Union[Byt
             growth_text = f'{sign}{growth:,.0f}'
             text_color = '#00C040' if growth >= 0 else '#FF4444'
             offset = 15 if growth >= 0 else -20
-
-            ax.annotate(growth_text, (year, growth), xytext=(15, offset),
-                        textcoords='offset points', ha='center', fontsize=9,
-                        color=text_color,
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                  edgecolor=text_color, alpha=1))
+            if len(years) < 26:
+                ax.annotate(growth_text, (year, growth), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
+            else:
+                ax.annotate(growth_text, (year, growth), xytext=(15, offset+2),
+                            textcoords='offset points', ha='center', fontsize=6,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
 
     if for_what == "api":
         for year, growth in zip(years, natural_growth):
@@ -465,12 +503,18 @@ def plot_natural_growth(data: list[dict], type: str, for_what: str) -> Union[Byt
             growth_text = f'{sign}{growth:,.0f}'
             text_color = '#00C0E8'
             offset = 15 if growth >= 0 else -20
-
-            ax.annotate(growth_text, (year, growth), xytext=(15, offset),
-                        textcoords='offset points', ha='center', fontsize=9,
-                        color=text_color,
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                  edgecolor=text_color, alpha=1))
+            if len(years) < 26:
+                ax.annotate(growth_text, (year, growth), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
+            else:
+                ax.annotate(growth_text, (year, growth), xytext=(15, offset+2),
+                            textcoords='offset points', ha='center', fontsize=6,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
@@ -563,11 +607,18 @@ def plot_migration(data: list[dict], type: str, for_what: str) -> Union[BytesIO,
             text_color = '#00C040' if mig >= 0 else '#FF4444'
             offset = 15 if mig >= 0 else -20
 
-            ax.annotate(mig_text, (year, mig), xytext=(15, offset),
-                        textcoords='offset points', ha='center', fontsize=9,
-                        color=text_color,
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                  edgecolor=text_color, alpha=1))
+            if len(years) < 26:
+                ax.annotate(mig_text, (year, mig), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
+            else:
+                ax.annotate(mig_text, (year, mig), xytext=(15, offset+2),
+                            textcoords='offset points', ha='center', fontsize=6,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
     if for_what == "api":
         for year, mig in zip(years, migration):
             sign = '+' if mig >= 0 else ''
@@ -575,11 +626,18 @@ def plot_migration(data: list[dict], type: str, for_what: str) -> Union[BytesIO,
             text_color = '#00C0E8'
             offset = 15 if mig >= 0 else -20
 
-            ax.annotate(mig_text, (year, mig), xytext=(15, offset),
-                        textcoords='offset points', ha='center', fontsize=9,
-                        color=text_color,
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                  edgecolor=text_color, alpha=1))
+            if len(years) < 26:
+                ax.annotate(mig_text, (year, mig), xytext=(15, offset),
+                            textcoords='offset points', ha='center', fontsize=9,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
+            else:
+                ax.annotate(mig_text, (year, mig), xytext=(15, offset+2),
+                            textcoords='offset points', ha='center', fontsize=6,
+                            color=text_color,
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                      edgecolor=text_color, alpha=1))
 
     x_min = min(years)
     x_max = max(years)
