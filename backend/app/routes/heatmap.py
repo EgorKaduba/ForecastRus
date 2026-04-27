@@ -16,8 +16,8 @@ heatmap_router = APIRouter(
 @heatmap_router.get("/", summary="Получить цвета для хитмапа")
 def get_heatmap(
         session: SessionDep,
-        year_from: Annotated[int, Query(ge=2013, le=2023)],
-        year_to: Annotated[int | None, Query(ge=2013, le=2023)] = None
+        year_from: Annotated[int, Query(ge=2010, le=2035)],
+        year_to: Annotated[int | None, Query(ge=2010, le=2035)] = None
 ) -> list[RegionColor]:
     if year_to and year_to != year_from:
         if year_to < year_from:
@@ -40,21 +40,23 @@ def get_heatmap(
 
     color_1 = (0.8, 0.8, 0.8)
     color_2 = (0.02, 0.04, 0.26)
-
+    values = list(codes.keys())
+    print(values)
     if res:
         for region in res:
             name = session.exec(select(Region.region_name).where(Region.region_id == region[0])).first()
-            population = region[1]
-            code = codes[name]
+            if name in values:
+                population = region[1]
+                code = codes[name]
 
-            t = (population - min_pop) / (max_pop - min_pop)
-            t = max(0, min(1, t))
+                t = (population - min_pop) / (max_pop - min_pop)
+                t = max(0, min(1, t))
 
-            r = color_1[0] + t * (color_2[0] - color_1[0])
-            g = color_1[1] + t * (color_2[1] - color_1[1])
-            b = color_1[2] + t * (color_2[2] - color_1[2])
+                r = color_1[0] + t * (color_2[0] - color_1[0])
+                g = color_1[1] + t * (color_2[1] - color_1[1])
+                b = color_1[2] + t * (color_2[2] - color_1[2])
 
-            color = f"{int(r * 255)}, {int(g * 255)}, {int(b * 255)}"
+                color = f"{int(r * 255)}, {int(g * 255)}, {int(b * 255)}"
 
-            response.append(RegionColor(code=code, name=name, population=population, color=color))
+                response.append(RegionColor(code=code, name=name, population=population, color=color))
     return response

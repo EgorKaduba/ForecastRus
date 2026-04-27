@@ -4,10 +4,13 @@ import Headline from '../components/Headline/Headline.jsx'
 import Map from '../components/Map/Map.jsx'
 import SingleYearInfo from '../components/SubjectInfo/SingleYearInfo.jsx'
 import CompareYearInfo from '../components/SubjectInfo/CompareYearInfo.jsx'
+import TopRaiting from "../components/TopRaiting/TopRaiting.jsx";
+import Demographics from "../components/Demographics/Demographics.jsx";
 import { searchSubject } from '../services/api.js'
 import './ForecastingPage.css'
 
 function ForecastingPage() {
+    const [selectedYear, setSelectedYear] = useState(2022);
     const [yearMode, setYearMode] = useState('single')
     const [yearData, setYearData] = useState({
         single: '2023',
@@ -111,6 +114,12 @@ function ForecastingPage() {
                     onSearchEnter={handleSearch}
                 />
                 <Map selectedYear={yearMode === 'single' ? yearData.single : yearData.compare.year1} />
+                {selectedYear && (
+                    <>
+                        <TopRaiting selectedYear={selectedYear} />
+                        <Demographics selectedYear={selectedYear} />
+                    </>
+                )}
 
                 {loading && (
                     <div className="subject-info loading">

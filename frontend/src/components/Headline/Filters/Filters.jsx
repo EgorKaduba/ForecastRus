@@ -26,7 +26,7 @@ function Filters({ onYearChange, onRegionChange, onSearch, onSearchEnter }) {
 
     const generateYearsList = () => {
         const startYear = 2010
-        const endYear = 2023
+        const endYear = 2035
         const yearsList = []
         for (let year = startYear; year <= endYear; year++) {
             yearsList.push(year.toString())
