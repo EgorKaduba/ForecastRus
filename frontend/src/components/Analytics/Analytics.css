@@ -45,7 +45,7 @@
   max-width: 988px;
 }
 
-/* Правая карточка с кнопкой — разделённая под углом */
+/* Карточка */
 .analytics-card {
   width: 616px;
   height: 293px;
@@ -54,6 +54,8 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  background: #00c0e8;
 }
 
 .analytics-card:hover {
@@ -61,29 +63,31 @@
   box-shadow: 8px 8px 20px rgba(0, 192, 232, 0.3);
 }
 
-/* Левая часть — голубая */
+/* Левая часть — голубая с диагональным срезом */
 .analytics-card-left {
-  flex: 1;
+  width: 55%;
   background: #00c0e8;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
   padding: 0 0 30px 30px;
-  clip-path: polygon(0 0, 85% 0, 70% 100%, 0 100%);
   position: relative;
   z-index: 2;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  box-shadow: #000000;
 }
 
-/* Правая часть — фото */
+/* Правая часть — фото со скосом */
 .analytics-card-right {
   flex: 1;
-  background-image: url("../../assets/analytics-photo.png");
+  background-image: url("../../assets/TopBG.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  clip-path: polygon(15% 0, 100% 0, 100% 100%, 30% 100%);
-  margin-left: -10%;
+  position: relative;
+  margin-left: -8%;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .button-text {
@@ -135,6 +139,15 @@
   .button-text {
     font-size: 28px;
   }
+  
+  .analytics-card-left {
+    padding: 0 0 20px 20px;
+  }
+  
+  .analytics-card-right {
+    margin-left: -7%;
+    clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
 @media (max-width: 1200px) {
@@ -178,6 +191,11 @@
   .analytics-card-left {
     padding: 0 0 20px 20px;
   }
+  
+  .analytics-card-right {
+    margin-left: -6%;
+    clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
 @media (max-width: 768px) {
@@ -207,7 +225,13 @@
   }
   
   .analytics-card-left {
+    width: 60%;
     padding: 0 0 15px 15px;
+  }
+  
+  .analytics-card-right {
+    margin-left: -5%;
+    clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 
@@ -236,10 +260,45 @@
   }
   
   .analytics-card-left {
-    clip-path: polygon(0 0, 90% 0, 80% 100%, 0 100%);
+    width: 65%;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    padding: 0 0 12px 12px;
+    box-shadow: #00c0e8;
   }
   
   .analytics-card-right {
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 40% 100%);
+    margin-left: -8%;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@media (max-width: 400px) {
+  .analytics {
+    padding: 30px 15px;
+  }
+  
+  .analytics-title {
+    font-size: 28px;
+  }
+  
+  .analytics-description {
+    font-size: 14px;
+  }
+  
+  .analytics-card {
+    height: 150px;
+  }
+  
+  .button-text {
+    font-size: 16px;
+  }
+  
+  .analytics-card-left {
+    padding: 0 0 10px 10px;
+  }
+  
+  .arrow-icon svg {
+    width: 22px;
+    height: 22px;
   }
 }

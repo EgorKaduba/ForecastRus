@@ -43,18 +43,28 @@ function YearSelector({ years, onYearChange, onCompareMode }) {
                     className={`mode-btn ${mode === 'single' ? 'active' : ''}`}
                     onClick={() => handleModeChange('single')}
                 >
-                    Один год
+                    ОДИН ГОД
                 </button>
                 <button
                     className={`mode-btn ${mode === 'compare' ? 'active' : ''}`}
                     onClick={() => handleModeChange('compare')}
                 >
-                    Сравнить годы
+                    СРАВНИТЬ ГОДА
                 </button>
             </div>
 
-            <div className="year-inputs">
-                {mode === 'single' ? (
+            {mode === 'single' ? (
+                <select
+                    className="year-select"
+                    value={year1}
+                    onChange={handleYear1Change}
+                >
+                    {years.map(year => (
+                        <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
+            ) : (
+                <div className="year-pair">
                     <select
                         className="year-select"
                         value={year1}
@@ -64,32 +74,17 @@ function YearSelector({ years, onYearChange, onCompareMode }) {
                             <option key={year} value={year}>{year}</option>
                         ))}
                     </select>
-                ) : (
-                    <>
-                        <div className="year-pair">
-                            <select
-                                className="year-select"
-                                value={year1}
-                                onChange={handleYear1Change}
-                            >
-                                {years.map(year => (
-                                    <option key={year} value={year}>{year}</option>
-                                ))}
-                            </select>
-                            <span className="vs-text">vs</span>
-                            <select
-                                className="year-select"
-                                value={year2}
-                                onChange={handleYear2Change}
-                            >
-                                {years.map(year => (
-                                    <option key={year} value={year}>{year}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </>
-                )}
-            </div>
+                    <select
+                        className="year-select"
+                        value={year2}
+                        onChange={handleYear2Change}
+                    >
+                        {years.map(year => (
+                            <option key={year} value={year}>{year}</option>
+                        ))}
+                    </select>
+                </div>
+            )}
         </div>
     )
 }

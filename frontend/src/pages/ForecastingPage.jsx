@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from '../components/Header/Header.jsx'
 import Headline from '../components/Headline/Headline.jsx'
 import Map from '../components/Map/Map.jsx'
+import Analytics from '../components/Analytics/Analytics.jsx'
 import SingleYearInfo from '../components/SubjectInfo/SingleYearInfo.jsx'
 import CompareYearInfo from '../components/SubjectInfo/CompareYearInfo.jsx'
 import TopRaiting from "../components/TopRaiting/TopRaiting.jsx";
@@ -118,8 +119,10 @@ function ForecastingPage() {
                     <>
                         <TopRaiting selectedYear={selectedYear} />
                         <Demographics selectedYear={selectedYear} />
+                        <Analytics selectedYear={selectedYear}/>
                     </>
                 )}
+                
 
                 {loading && (
                     <div className="subject-info loading">

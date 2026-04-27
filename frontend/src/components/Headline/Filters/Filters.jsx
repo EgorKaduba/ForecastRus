@@ -56,6 +56,36 @@ function Filters({ onYearChange, onRegionChange, onSearch, onSearchEnter }) {
         loadData()
     }, [])
 
+    // Обработчик выбора КРАЯ
+    const handleLandChange = (value) => {
+        setSelectedLand(value)
+        if (value) {
+            // При выборе края сбрасываем область и республику
+            setSelectedArea('')
+            setSelectedRepublic('')
+        }
+    }
+
+    // Обработчик выбора ОБЛАСТИ
+    const handleAreaChange = (value) => {
+        setSelectedArea(value)
+        if (value) {
+            // При выборе области сбрасываем край и республику
+            setSelectedLand('')
+            setSelectedRepublic('')
+        }
+    }
+
+    // Обработчик выбора РЕСПУБЛИКИ
+    const handleRepublicChange = (value) => {
+        setSelectedRepublic(value)
+        if (value) {
+            // При выборе республики сбрасываем край и область
+            setSelectedLand('')
+            setSelectedArea('')
+        }
+    }
+
     const handleYearChangeWrapper = (yearData) => {
         if (onYearChange) {
             onYearChange(yearData)
@@ -103,19 +133,19 @@ function Filters({ onYearChange, onRegionChange, onSearch, onSearchEnter }) {
                     label="КРАЙ"
                     options={lands}
                     value={selectedLand}
-                    onChange={setSelectedLand}
+                    onChange={handleLandChange}
                 />
                 <FilterSelect
                     label="ОБЛАСТЬ"
                     options={areas}
                     value={selectedArea}
-                    onChange={setSelectedArea}
+                    onChange={handleAreaChange}
                 />
                 <FilterSelect
                     label="РЕСПУБЛИКА"
                     options={republics}
                     value={selectedRepublic}
-                    onChange={setSelectedRepublic}
+                    onChange={handleRepublicChange}
                 />
 
                 <div className="search-wrapper">
@@ -127,7 +157,7 @@ function Filters({ onYearChange, onRegionChange, onSearch, onSearchEnter }) {
                     <input
                         type="text"
                         className="filter-search"
-                        placeholder="ПОИСК (нажмите Enter)"
+                        placeholder="ПОИСК"
                         value={searchQuery}
                         onChange={handleSearchChange}
                         onKeyPress={handleSearchKeyPress}
