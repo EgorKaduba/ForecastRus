@@ -61,6 +61,12 @@ function Filters({onYearChange}) {
         <div className="filters">
             <div className="filters-container">
                 <FilterSelect
+                    label="ГОД"
+                    options={years}
+                    value={selectedYear}
+                    onChange={handleYearChange}
+                />
+                <FilterSelect
                     label="ВСЕ"
                     options={regions}
                     value={selectedRegion}
@@ -83,13 +89,6 @@ function Filters({onYearChange}) {
                     options={republics}
                     value={selectedRepublic}
                     onChange={setSelectedRepublic}
-                />
-
-                <FilterSelect
-                    label="ГОД"
-                    options={years}
-                    value={selectedYear}
-                    onChange={handleYearChange}
                 />
 
         <div className="search-wrapper">
