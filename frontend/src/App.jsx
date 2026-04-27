@@ -3,6 +3,7 @@ import './App.css'
 import Header from "./components/Header/Header.jsx";
 import Headline from "./components/Headline/Headline.jsx";
 import Map from "./components/Map/Map.jsx";
+import TopRaiting from './components/TopRaiting/TopRaiting.jsx';
 
 function App() {
     const [selectedYear, setSelectedYear] = useState(2022);
@@ -16,6 +17,7 @@ function App() {
             <Header />
             <Headline onYearChange={handleYearChange} />
             <Map selectedYear={selectedYear} />
+            <TopRaiting selectedYear={selectedYear} />
         </div>
     )
 }
